@@ -1,4 +1,4 @@
-# [team name] Design Document
+# [The Boston Celtics] Design Document
 
   
 
@@ -12,13 +12,9 @@ this template.*
 
   
 
-*Replace italicized text (including this text!) with details of the design you
+Procedurally generated audio for content creators
 
-are proposing for your team project. (Your replacement text shouldn't be in
 
-italics)*
-
-  
 
 *You should take a look at the example design document in the same folder as
 
@@ -32,32 +28,28 @@ level of detail to aim for.*
 
   
 
-## 1. Problem Statement
+ ## 1. Problem Statement 
+
+ Content creators get copywrite strikes on Youtube because they accidentally use trade marked audio
 
   
-
-*Explain clearly what problem you are trying to solve.*
-
-  
   
 
-## 2. Top Questions to Resolve in Review
-
-  
+## 2. Top Questions to Resolve in Review  
 
 *List the most important questions you have about your design, or things that
+you are still debating internally that you might like help working through.
 
-you are still debating internally that you might like help working through.*
-
-  
-
-1. 
-
-2. 
-
-3. 
-
-  
+1. Is the time scope (2 weeks)
+2. How do we create audio or use sampled audio to generate the tracks (scalaCollider)
+3. How does audio work while sending and recieving over server (audio storage on server)
+4. The algorithm for generation of good sounding music
+6. Where does the abstraction of what should be generated stop
+6. How do we layer music events and beats
+7. How do you tell an algorthm where or when to break music theory rules
+8. Question of Feature: How to generate two differen't music genres into one song (mix genre)
+9. Question of Business: How do we deliver product to consumer (deliver the generated audio)
+ 
 
 ## 3. Use Cases
 
@@ -71,15 +63,7 @@ for the organization providing the product to customers.*
 
   
 
-U1. *As a [product] customer, I want to `<result>` when I `<action>`*
-
-  
-
-U2. *As a [product] customer, I want to view my grocery list when I log into the
-
-grocery list page*
-
-U3. ...
+U1. *As a [product] customer, I want to `<get copywrite free audio>` when I `<use the service>`*
 
   
 
@@ -87,13 +71,7 @@ U3. ...
 
   
 
-*Clarify which parts of the problem you intend to solve. It helps reviewers know
-
-what questions to ask to make sure you are solving for what you say and stops
-
-discussions from getting sidetracked by aspects you do not intend to handle in
-
-your design.*
+intend to solve copywrite strikes on content creator videos
 
   
 

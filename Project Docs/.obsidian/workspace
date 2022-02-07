@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Project Ideas.md",
+            "file": "Design Documents/Game Engine.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Project Ideas.md",
+                "file": "Design Documents/Game Engine.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,13 +89,15 @@
   },
   "active": "2399a0b450f032b4",
   "lastOpenFiles": [
+    "Design Documents/Game Engine.md",
+    "Design Documents/Stock Market App.md",
+    "Design Documents/Example Design Document.md",
+    "Design Documents/Construction Materials App DD.md",
+    "Design Documents/Car Estimator.md",
     "Project Ideas.md",
+    "Design Documents/Music Generator.md",
+    "Accomplishment tracking template.md",
     "Team Charter.md",
-    "Rubric.md",
-    "Reflection.md",
-    "Integration Test Plan.md",
-    "Example Design Document.md",
-    "Design Document.md",
-    "Accomplishment tracking template.md"
+    "Rubric.md"
   ]
 }
