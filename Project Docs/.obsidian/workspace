@@ -1,0 +1,100 @@
+{
+  "main": {
+    "id": "be08811d3bdcf2f6",
+    "type": "split",
+    "children": [
+      {
+        "id": "2399a0b450f032b4",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Team Charter.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4391952b3d25f1bd",
+    "type": "split",
+    "children": [
+      {
+        "id": "0f5ab5b27a30c70e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "24f104e3caa7f6ec",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "13c0a2efbc7a36c2",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "624b7c57a7a1718f",
+    "type": "split",
+    "children": [
+      {
+        "id": "d7dbb86ffd766ead",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "de028bbbd183503a",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Team Charter.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "2399a0b450f032b4",
+  "lastOpenFiles": [
+    "Team Charter.md",
+    "Rubric.md",
+    "Reflection.md",
+    "Integration Test Plan.md",
+    "Example Design Document.md",
+    "Design Document.md",
+    "Accomplishment tracking template.md"
+  ]
+}
