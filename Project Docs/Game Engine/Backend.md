@@ -157,5 +157,25 @@ Creates user with given username/email and password. Hashes password before stor
 #### Discription
 Uses username and password to return a  [JWT](https://jwt.io/) for authentication 
 
+#### Parameters 
+- username - username/email
+- password - the users password 
+```json
+{
+	"username": "example@example.com",
+	"password": "password"
+}
+```
+
+#### Returns
+- [JWT](https://jwt.io/) - Of user info
+
+
+### PostAssets
+#### Discription
+Creates asset from for user with given prams
+
+#### Parameters 
+-  [JWT](https://jwt.io/) - Contains all user info as well 
 
 
