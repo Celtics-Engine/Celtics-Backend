@@ -50,7 +50,7 @@ We want you to see the full set of expectations for transparency’s sake.*
 
 |Project Completion (Feature Complete)                            |Sprint 3 Friday by 5pm    |               |                                  |
 
-|[Team Reflection](reflection.md)                                 |Sprint 4 Wednesday by 5PM |               |                                  |
+|[Team Reflection](Reflection.md)                                 |Sprint 4 Wednesday by 5PM |               |                                  |
 
 |[Accomplishment Tracking (person 1)](accomplishment_tracking.md) |Sprint 4 Wednesday by 5PM |               |                                  |
 
