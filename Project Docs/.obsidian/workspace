@@ -9,7 +9,7 @@
         "state": {
           "type": "markdown",
           "state": {
-            "file": "Design Documents/Game Engine.md",
+            "file": "Game Engine/Features.md",
             "mode": "source",
             "source": false
           }
@@ -69,7 +69,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Design Documents/Game Engine.md",
+                "file": "Game Engine/Features.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -89,15 +89,15 @@
   },
   "active": "2399a0b450f032b4",
   "lastOpenFiles": [
-    "Design Documents/Game Engine.md",
+    "Game Engine/Features.md",
+    "Game Engine/Game Engine.md",
+    "SCRUM/Meeting notes - 02-08-2022.md",
+    "Design Documents/Construction Materials App DD.md",
     "Design Documents/Stock Market App.md",
     "Design Documents/Example Design Document.md",
-    "Design Documents/Construction Materials App DD.md",
     "Design Documents/Car Estimator.md",
     "Project Ideas.md",
     "Design Documents/Music Generator.md",
-    "Accomplishment tracking template.md",
-    "Team Charter.md",
-    "Rubric.md"
+    "Accomplishment tracking template.md"
   ]
 }
