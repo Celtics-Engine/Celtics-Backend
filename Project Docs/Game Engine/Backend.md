@@ -32,8 +32,28 @@ The Backend will be a api for storing files asset files on a server for use by o
 
 
 # API
-### Models 
-`NEED TO BE COMPLEATED`
+
+
+## Models `WIP`
+#### User Table
+- asin - userId
+- username - email
+- password - hashed before stored
+- date_created - timestamp
+
+#### Asset Table
+- asin - asset id
+- userid - asin of the user who created the asset `(maybe multable)`
+- name - Name of the asset
+- asset_location - Link to where asset files are stored on S3 for download
+- discription - Discription of the asset
+- images - Set of image links for files stored on S3
+- asset_size - Size of files uploaded so S3 calculated at upload
+- downloads - Number of times the asset has been downloaded
+- compatable_engine_ver - Set of engine versions that work with asset
+- date_posted - Date that the content was uploaded
+
+
 ```yaml
 Resources:
   UserTable:
@@ -70,16 +90,18 @@ Resources:
           AttributeType: "S"
 		- AttributeName: "name"
           AttributeType: "S"
-		- AttributeName: "asset_location"
+		- AttributeName: "date_created"
           AttributeType: "S"
 		- AttributeName: "discription"
           AttributeType: "S"
 		- AttributeName: "images"
           AttributeType: "S"
-		- AttributeName: "file_size"
+		- AttributeName: "asset_size"
           AttributeType: "S"
 		- AttributeName: "downloads"
           AttributeType: "N"
+		- AttributeName: "compatable_engine_ver"
+          AttributeType: "S"
 		- AttributeName: "date_posted"
           AttributeType: "S"
       KeySchema:
@@ -99,6 +121,8 @@ Resources:
           KeyType: "RANGE"
 		- AttributeName: "downloads"
           KeyType: "RANGE"
+		- AttributeName: "compatable_engine_ver"
+          KeyType: "RANGE"
 		- AttributeName: "date_posted"
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
@@ -109,7 +133,29 @@ Resources:
 
 ```
 
+
 ### PostCreateUser
+#### Discription
+Creates user with given username/email and password. Hashes password before storing into database.
+
+#### Parameters 
+- username - username/email
+- password - the users password `MUST BE HASHED BEFORE STORED`
+
+```json
+{
+	"username": "example@example.com",
+	"password": "password"
+}
+```
+
+#### Returns
+- [JWT](https://jwt.io/) - Of user info
+
+
+### GetLoginUser
+#### Discription
+Uses username and password to return a  [JWT](https://jwt.io/) for authentication 
 
 
 
