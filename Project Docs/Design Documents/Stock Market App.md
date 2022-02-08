@@ -15,7 +15,8 @@ based on the Unit 4 project.
   
 1. Stock Market customer success rate 
 2. Each user has a level tied to account 
-3. You can be matched up with another user based off your level 
+3. Example
+4. You can be matched up with another user based off your level 
 
 
   
