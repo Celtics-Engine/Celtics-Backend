@@ -55,80 +55,39 @@ The Backend will be a api for storing files asset files on a server for use by o
 
 
 ```yaml
-Resources:
-  UserTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      AttributeDefinitions:
-        - AttributeName: "asin"
-          AttributeType: "S"
-		- AttributeName: "username"
-          AttributeType: "S"
-		- AttributeName: "password"
-          AttributeType: "S"
-		- AttributeName: "date_created"
-          AttributeType: "S"
-      KeySchema:
-        - AttributeName: "id"
-          KeyType: "HASH"
-		- AttributeName: "username"
-          KeyType: "RANGE"
-		- AttributeName: "password"
-          KeyType: "RANGE"
-		- AttributeName: "date_created"
-          KeyType: "RANGE"
-      BillingMode: "PAY_PER_REQUEST"
-      TableName: "users"
+Resources:  
+  UserTable:  
+    Type: AWS::DynamoDB::Table  
+    Properties:  
+      AttributeDefinitions:  
+        - AttributeName: "asin"  
+ AttributeType: "S"  
+ - AttributeName: "username"  
+ AttributeType: "S"  
+ KeySchema:  
+        - AttributeName: "asin"  
+ KeyType: "HASH"  
+ - AttributeName: "username"  
+ KeyType: "RANGE"  
+ BillingMode: "PAY_PER_REQUEST"  
+ TableName: "celtic_users"  
+  
+ AssetTable:  
+    Type: AWS::DynamoDB::Table  
+    Properties:  
+      AttributeDefinitions:  
+        - AttributeName: "asin"  
+ AttributeType: "S"  
+ - AttributeName: "user_id"  
+ AttributeType: "S"  
+ KeySchema:  
+        - AttributeName: "asin"  
+ KeyType: "HASH"  
+	 - AttributeName: "user_id"  
+KeyType: "RANGE"  
+ BillingMode: "PAY_PER_REQUEST"  
+ TableName: "celtic_assets"
 
-  AssetTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      AttributeDefinitions:
-        - AttributeName: "asin"
-          AttributeType: "S"
-        - AttributeName: "user_id"
-          AttributeType: "S"
-		- AttributeName: "name"
-          AttributeType: "S"
-		- AttributeName: "date_created"
-          AttributeType: "S"
-		- AttributeName: "discription"
-          AttributeType: "S"
-		- AttributeName: "images"
-          AttributeType: "S"
-		- AttributeName: "asset_size"
-          AttributeType: "S"
-		- AttributeName: "downloads"
-          AttributeType: "N"
-		- AttributeName: "compatable_engine_ver"
-          AttributeType: "S"
-		- AttributeName: "date_posted"
-          AttributeType: "S"
-      KeySchema:
-        - AttributeName: "asin"
-          KeyType: "HASH"
-        - AttributeName: "user_id"
-          KeyType: "RANGE"
-		- AttributeName: "name"
-          KeyType: "RANGE"
-		- AttributeName: "asset_location"
-          KeyType: "RANGE"
-		- AttributeName: "discription"
-          KeyType: "RANGE"
-		- AttributeName: "images"
-          KeyType: "RANGE"
-		- AttributeName: "file_size"
-          KeyType: "RANGE"
-		- AttributeName: "downloads"
-          KeyType: "RANGE"
-		- AttributeName: "compatable_engine_ver"
-          KeyType: "RANGE"
-		- AttributeName: "date_posted"
-          KeyType: "RANGE"
-      BillingMode: "PAY_PER_REQUEST"
-      TableName: "celtic_assets"
-
-	
 	
 
 ```
@@ -176,6 +135,45 @@ Uses username and password to return a  [JWT](https://jwt.io/) for authenticatio
 Creates asset from for user with given prams
 
 #### Parameters 
--  [JWT](https://jwt.io/) - Contains all user info as well 
+- [JWT](https://jwt.io/) - Contains all user info as well `REQUIRED`
+- name - The name of the asset `REQUIRED`
+- description - Description of the asset 
+- images - The images to upload to the Asset page `REQUIRED`
+- compatable_engine_ver - all the engine versions that this is compatable with `REQUIRED`
+
+```json
+{
+	"jwt": "JWT",
+	"name": "Cool New Asset",
+	"description": "The description",
+	"images": "[]",
+	"compatable_engine_ver": "0.0.1"
+}
+```
+
+
+#### Returns
+- 200 -> Success
+- `Errors TBD`
+
+
+### DeleteAssets
+#### Discription
+Deletes asset from for user with given prams
+
+#### Parameters 
+- [JWT](https://jwt.io/) - Contains all user info as well `REQUIRED`
+- asin - Set of all asssets to be deleted `REQUIRED`
+
+```json
+{
+	"jwt": "JWT",
+	"asin": "[asin, asin1, ...]",
+}
+```
+
+#### Returns
+- 200 -> Success
+- `Errors TBD`
 
 
