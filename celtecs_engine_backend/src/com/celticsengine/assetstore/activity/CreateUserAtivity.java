@@ -2,28 +2,29 @@ package com.celticsengine.assetstore.activity;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.celticsengine.assetstore.dynamodb.CelticUsersDao;
+import com.celticsengine.assetstore.dynamodb.models.CelticUsers;
+import com.celticsengine.assetstore.models.UserModel;
 import com.celticsengine.assetstore.models.requests.CreateUserRequest;
 import com.celticsengine.assetstore.models.results.CreateUserResult;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CreateUserAtivity implements RequestHandler<CreateUserRequest, CreateUserResult> {
     private final Logger log = LogManager.getLogger();
-    private final PlaylistDao playlistDao;
-    private final ModelConverter modelConverter = new ModelConverter();
+    private final CelticUsersDao celticUsersDao;
+    private final UserModel userModel = new UserModel();
 
     /**
      * Instantiates a new CreatePlaylistActivity object.
      *
-     * @param playlistDao PlaylistDao to access the playlists table.
+     * @param celticUsersDao PlaylistDao to access the playlists table.
      */
     @Inject
-    public CreateUserActivity(PlaylistDao playlistDao) {
-        this.playlistDao = playlistDao;
+    public CreateUserAtivity(CelticUsersDao celticUsersDao) {
+        this.celticUsersDao = celticUsersDao;
     }
 
     /**
@@ -35,32 +36,25 @@ public class CreateUserAtivity implements RequestHandler<CreateUserRequest, Crea
      * If the provided playlist name or customer ID has invalid characters, throws an
      * InvalidAttributeValueException
      *
-     * @param createPlaylistRequest request object containing the playlist name and customer ID
+     * @param createUserRequest request object containing the playlist name and customer ID
      *                              associated with it
-     * @return createPlaylistResult result object containing the API defined {@link UserModel}
+     * @return createUserResult result object containing the API defined {@link UserModel}
      */
     @Override
-    public CreateUserResult handleRequest(final CreateUserRequest createPlaylistRequest, Context context) {
-        log.info("Received CreatePlaylistRequest {}", createUserRequest);
-
-        if (!MusicPlaylistServiceUtils.isValidString(createPlaylistRequest.getName())
-                || !MusicPlaylistServiceUtils.isValidString(createPlaylistRequest.getCustomerId())) {
-            throw new InvalidAttributeValueException("Please recheck your userName or CustomerID.");
-        }
-
-        Playlist playlist = new Playlist();
-        playlist.setCustomerId(createPlaylistRequest.getCustomerId());
-        playlist.setName(createPlaylistRequest.getName());
-        playlist.setTags(new HashSet<>(createPlaylistRequest.getTags()));
-        playlist.setId(MusicPlaylistServiceUtils.generatePlaylistId());
-        playlist.setSongList(new ArrayList<>());
-        playlist.setSongCount(0);
-
-        playlistDao.savePlaylist(playlist);
+    public CreateUserResult handleRequest(final CreateUserRequest createUserRequest, Context context) {
+        log.info("Received CreateUserRequest {}", createUserRequest);
 
 
-        return CreatePlaylistResult.builder()
-                .withPlaylist(modelConverter.toPlaylistModel(playlist))
+
+        CelticUsers celticUsers = new CelticUsers();
+        celticUsers.setUsername(createUserRequest.getUsername());
+        celticUsers.setPassword(createUserRequest.getPassword());
+
+        celticUsersDao.saveCelticUsers(celticUsers);
+
+
+        return CreateUserResult.builder()
+                .withCelticUsers(new UserModel(createUserRequest.getUsername(),createUserRequest.getPassword()))
                 .build();
     }
 }

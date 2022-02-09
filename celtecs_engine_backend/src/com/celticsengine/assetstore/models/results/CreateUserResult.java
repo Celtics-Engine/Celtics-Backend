@@ -22,7 +22,7 @@ public class CreateUserResult {
     public static final class Builder {
         private UserModel userModel;
 
-        public Builder withPlaylist(UserModel userModel) {
+        public Builder withCelticUsers(UserModel userModel) {
             this.userModel = userModel;
             return this;
         }
