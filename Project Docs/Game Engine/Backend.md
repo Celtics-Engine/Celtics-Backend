@@ -92,7 +92,7 @@ KeyType: "RANGE"
 
 ```
 
-
+---
 ### PostCreateUser
 #### Discription
 Creates user with given username/email and password. Hashes password before storing into database.
@@ -111,7 +111,7 @@ Creates user with given username/email and password. Hashes password before stor
 #### Returns
 - [JWT](https://jwt.io/) - Of user info
 
-
+---
 ### GetLoginUser
 #### Discription
 Uses username and password to return a  [JWT](https://jwt.io/) for authentication 
@@ -129,7 +129,7 @@ Uses username and password to return a  [JWT](https://jwt.io/) for authenticatio
 #### Returns
 - [JWT](https://jwt.io/) - Of user info
 
-
+---
 ### PostAssets
 #### Discription
 Creates asset from for user with given prams
@@ -138,7 +138,7 @@ Creates asset from for user with given prams
 - [JWT](https://jwt.io/) - Contains all user info as well `REQUIRED`
 - name - The name of the asset `REQUIRED`
 - description - Description of the asset 
-- images - The images to upload to the Asset page `REQUIRED`
+- images - The images to upload to the Asset page -> should have default image if none is provided
 - compatable_engine_ver - all the engine versions that this is compatable with `REQUIRED`
 
 ```json
@@ -156,7 +156,7 @@ Creates asset from for user with given prams
 - 200 -> Success
 - `Errors TBD`
 
-
+---
 ### DeleteAssets
 #### Discription
 Deletes asset from for user with given prams
@@ -175,5 +175,39 @@ Deletes asset from for user with given prams
 #### Returns
 - 200 -> Success
 - `Errors TBD`
+---
+## PutAsset
+#### Discription
+Updates asset entry in database
+
+#### Parameters 
+- [JWT](https://jwt.io/) - Contains all user info as well `REQUIRED`
+- asin - Set of all asssets to be deleted `REQUIRED`
+- 
+
+```json
+{
+	"example": "example",
+}
+```
+
+#### Returns
+- 
+---
 
 
+
+## Template
+#### Discription
+
+#### Parameters 
+- 
+
+```json
+{
+	"example": "example",
+}
+```
+
+#### Returns
+- 
