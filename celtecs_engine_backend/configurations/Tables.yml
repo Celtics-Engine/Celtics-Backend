@@ -1,5 +1,3 @@
-
-
 Resources:
   UserTable:
     Type: AWS::DynamoDB::Table
