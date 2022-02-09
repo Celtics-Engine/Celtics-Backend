@@ -59,6 +59,9 @@ dependencies {
     implementation 'com.amazonaws:aws-lambda-java-events:2.2.9'
     runtimeOnly 'com.amazonaws:aws-lambda-java-log4j2:1.2.0'
 
+    //JWT for Hash Post
+    implementation 'io.jsonwebtoken:jjwt-root:0.11.1'
+
 }
 
 task buildZip(type: Zip) {
