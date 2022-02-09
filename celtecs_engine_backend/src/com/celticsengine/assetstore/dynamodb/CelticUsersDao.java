@@ -1,5 +1,7 @@
 package com.celticsengine.assetstore.dynamodb;
 
+import com.amazonaws.services.dynamodbv2.model.QueryRequest;
+import com.amazonaws.services.dynamodbv2.model.QueryResult;
 import com.celticsengine.assetstore.dynamodb.models.CelticUsers;
 import com.celticsengine.assetstore.exception.CelticUsersNotFoundException;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -19,12 +21,12 @@ public class CelticUsersDao {
         this.dynamoDbMapper = dynamoDbMapper;
     }
 
-    /**
-     * Returns the {@link CelticUsers} corresponding to the specified id.
-     *
-     * @param id the Playlist ID
-     * @return the stored Playlist, or null if none was found.
-     */
+
+    public CelticUsers getCelticUserFromUserName(String username){
+
+        QueryRequest queryRequest = new QueryRequest().withTableName("celtic_users").withKeyConditionExpression(username);
+
+    }
     public CelticUsers getCelticUsers(String asin, String userName) {
         CelticUsers celticUsers = this.dynamoDbMapper.load(CelticUsers.class, asin, userName);
 

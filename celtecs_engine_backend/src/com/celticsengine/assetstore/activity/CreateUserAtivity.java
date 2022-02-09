@@ -44,11 +44,14 @@ public class CreateUserAtivity implements RequestHandler<CreateUserRequest, Crea
     public CreateUserResult handleRequest(final CreateUserRequest createUserRequest, Context context) {
         log.info("Received CreateUserRequest {}", createUserRequest);
 
+        if (createUserRequest.getUsername().equals(celticUsersDao.getCelticUsers()))     {
 
+        }
 
         CelticUsers celticUsers = new CelticUsers();
         celticUsers.setUsername(createUserRequest.getUsername());
         celticUsers.setPassword(createUserRequest.getPassword());
+
 
         celticUsersDao.saveCelticUsers(celticUsers);
 
