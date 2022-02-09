@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class UserModel {
-    private String asin = UUID.randomUUID().toString(); // TODO : check it does exist or no
+    private String asin ;
     private String username;
     private String password;
     private String dateCreated = LocalDate.now().toString();

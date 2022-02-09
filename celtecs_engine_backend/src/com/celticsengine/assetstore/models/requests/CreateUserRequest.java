@@ -7,17 +7,13 @@ public class CreateUserRequest {
     private String username;
     private String password;
 
-    public CreateUserRequest(String asin, String username, String password, String dateCreated) {
+    public CreateUserRequest(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public CreateUserRequest() {
-    }
-
     public CreateUserRequest(Builder builder) {
-        this.username = builder.username;
-        this.password = builder.password;
+        this(builder.username,builder.password);
     }
 
     public String getUsername() {
@@ -35,6 +31,8 @@ public class CreateUserRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -61,7 +59,6 @@ public class CreateUserRequest {
         private Builder() {
 
         }
-
         public Builder withUsername(String usernameToUse) {
             this.username = usernameToUse;
             return this;
