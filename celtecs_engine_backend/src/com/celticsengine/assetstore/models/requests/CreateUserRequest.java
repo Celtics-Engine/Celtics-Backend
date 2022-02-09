@@ -1,5 +1,8 @@
 package com.celticsengine.assetstore.models.requests;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
+import java.util.Base64;
 import java.util.Objects;
 
 public class CreateUserRequest {
@@ -9,7 +12,7 @@ public class CreateUserRequest {
 
     public CreateUserRequest(String username, String password) {
         this.username = username;
-        this.password = password;
+        this.password = Base64.getEncoder().encodeToString(DigestUtils.sha512(password));
     }
 
     public CreateUserRequest(Builder builder) {

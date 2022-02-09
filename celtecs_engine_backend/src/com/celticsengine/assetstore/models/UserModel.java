@@ -15,10 +15,8 @@ public class UserModel {
     private String dateCreated = LocalDate.now().toString();
 
     public UserModel(String username, String password) {
-
         this.username = username;
-        this.password = DigestUtils.sha512(password).toString();
-
+        this.password = password;
     }
 
     public UserModel() {}
