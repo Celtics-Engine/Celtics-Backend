@@ -1,0 +1,38 @@
+
+
+Resources:
+  UserTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "asin"
+          AttributeType: "S"
+        - AttributeName: "username"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "asin"
+          KeyType: "HASH"
+        - AttributeName: "username"
+          KeyType: "RANGE"
+      BillingMode: "PAY_PER_REQUEST"
+      TableName: "celtic_users"
+
+  AssetTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: "asin"
+          AttributeType: "S"
+        - AttributeName: "user_id"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "asin"
+          KeyType: "HASH"
+        - AttributeName: "user_id"
+          KeyType: "RANGE"
+      BillingMode: "PAY_PER_REQUEST"
+      TableName: "celtic_assets"
+
+
+
+

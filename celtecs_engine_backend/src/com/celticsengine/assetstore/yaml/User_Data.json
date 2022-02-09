@@ -1,0 +1,22 @@
+{
+  "celtic_users": [
+    {
+      "PutRequest": {
+        "Item": {
+          "asin": {
+            "S": "B019HKJTCI"
+          },
+          "username": {
+            "S": "Will"
+          },
+          "password": {
+            "S": "aohfoafad"
+          },
+          "date_created": {
+            "S": "Dark Side of the Moon"
+          }
+        }
+      }
+    }
+  ]
+}
