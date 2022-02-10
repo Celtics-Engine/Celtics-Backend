@@ -110,8 +110,12 @@ Creates user with given username/email and password. Hashes password before stor
 
 #### Returns
 - [JWT](https://jwt.io/) - Of user info
+#### Errors
+- Invalid Username or it already exist
+- Password Doesnt meet requirements (MAYBE)
 
----
+
+
 ### GetLoginUser
 #### Discription
 Uses username and password to return a  [JWT](https://jwt.io/) for authentication 
@@ -128,8 +132,12 @@ Uses username and password to return a  [JWT](https://jwt.io/) for authenticatio
 
 #### Returns
 - [JWT](https://jwt.io/) - Of user info
+#### Errors
+- Invalid username
+- Invalid password
 
----
+
+
 ### PostAssets
 #### Discription
 Creates asset from for user with given prams
@@ -151,12 +159,13 @@ Creates asset from for user with given prams
 }
 ```
 
-
 #### Returns
 - 200 -> Success
-- `Errors TBD`
+#### Errors
+- Missing Fields (Name wasn't entered or compatable_engine_ver wasnt not entered)
 
----
+
+
 ### DeleteAssets
 #### Discription
 Deletes asset from for user with given prams
@@ -164,50 +173,171 @@ Deletes asset from for user with given prams
 #### Parameters 
 - [JWT](https://jwt.io/) - Contains all user info as well `REQUIRED`
 - asin - Set of all asssets to be deleted `REQUIRED`
+- password - user password `REQUIRED`
 
 ```json
 {
 	"jwt": "JWT",
 	"asin": "[asin, asin1, ...]",
+	"password": "password"
 }
 ```
 
 #### Returns
 - 200 -> Success
-- `Errors TBD`
----
+#### Errors
+- Invalid password
+- Asset Doesnt exist
+
+
+
 ## PutAsset
 #### Discription
 Updates asset entry in database
 
 #### Parameters 
 - [JWT](https://jwt.io/) - Contains all user info as well `REQUIRED`
-- asin - Set of all asssets to be deleted `REQUIRED`
-- 
+- asin - The asin of the asset that needs to be updated `REQUIRED`
+- name - The name of the asset
+- description - Description of the asset 
+- images - The images to upload to the Asset page
+- compatable_engine_ver - all the engine versions that this is compatable with
 
 ```json
 {
-	"example": "example",
+	"jwt": "JWT",
+	"asin": "asin",
+	"name": "name",
+	"description": "description",
+	"images": "images",
+	"compatable_engine_ver": "compatable_engine_ver" 
 }
 ```
 
 #### Returns
-- 
----
+-  200 -> Success
+#### Errors
+- Asset doesnt exist
 
 
 
-## Template
+## GetAsset
 #### Discription
-
+Gets the download link for the asset
 #### Parameters 
-- 
+- asin -  The asin of the asset that is being requested `REQUIRED`
 
 ```json
 {
-	"example": "example",
+	"asin": "asin"
 }
 ```
 
 #### Returns
-- 
+-  asset_location
+#### Errors
+-  Asset doesnt exist
+
+
+
+## GetUser
+#### Discription
+Gets the User profile 
+#### Parameters 
+-  asin - userId
+
+```json
+{
+	"asin": "userId",
+}
+```
+
+#### Returns
+- Users profile
+#### Errors
+- User profile doesnt exist 
+
+
+
+## PutUser
+#### Discription
+Updates user information
+#### Parameters 
+- [JWT](https://jwt.io/) - Contains all user info as well `REQUIRED`
+- username - email
+
+```json
+{
+	"jwt": "JWT",
+	"username": "username"
+}
+```
+
+#### Returns
+- 200 -> Success
+#### Errors
+- Username already exist
+
+
+
+## DeleteUser
+#### Discription
+Deletes the user
+#### Parameters 
+- [JWT](https://jwt.io/) - Contains all user info as well `REQUIRED`
+- password - the users password `REQUIRED`
+
+```json
+{
+	"jwt": "JWT",
+	"password": "password"
+}
+```
+
+#### Returns
+- 200 -> Success
+#### Errors
+- Invalid Password
+
+
+
+## UpdatePassword
+#### Discription
+Updates user password
+#### Parameters 
+- [JWT](https://jwt.io/) - Contains all user info as well `REQUIRED`
+- password - users password `REQUIRED`
+
+```json
+{
+	"jwt": "JWT",
+	"password": "password",
+	"newpassword": "newpassword"
+
+}
+```
+
+#### Returns
+- 200 -> Success
+#### Errors
+- Passwords do not match
+- Password doesnt meet requirements(MAYBE)
+
+
+
+## SearchAssests
+#### Discription
+Searchs for the asset
+#### Parameters 
+- name - assets name
+
+```json
+{
+	"name": "name",
+}
+```
+
+#### Returns
+- List of Assest with that name
+#### Errors
+- No assets found
