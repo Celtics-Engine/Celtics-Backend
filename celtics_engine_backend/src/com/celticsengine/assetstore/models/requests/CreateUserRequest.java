@@ -11,7 +11,7 @@ public class CreateUserRequest {
     private String password;
 
     public CreateUserRequest(String username, String password) {
-        this.username = username;
+        this.username = Base64.getEncoder().encodeToString(DigestUtils.sha512(username));
         this.password = Base64.getEncoder().encodeToString(DigestUtils.sha512(password));
     }
 

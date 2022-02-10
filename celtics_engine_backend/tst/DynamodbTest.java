@@ -5,22 +5,31 @@ import com.celticsengine.assetstore.dynamodb.models.CelticUsers;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+
+import java.util.UUID;
 
 import static io.jsonwebtoken.lang.Assert.*;
-
+import static org.mockito.MockitoAnnotations.openMocks;
 
 public class DynamodbTest {
 
+    @Mock
     private CelticUsersDao dao;
+
+    @Mock
     CelticUsers user = new CelticUsers();
 
     @BeforeEach
     void setup() {
-         dao = new CelticUsersDao(AmazonDynamoDBClientBuilder.defaultClient());
+        openMocks(this);
+        dao = new CelticUsersDao(AmazonDynamoDBClientBuilder.defaultClient());
     }
 
     @Test
     void userSave_andLoad() {
+
+        user.setUserId(UUID.randomUUID().toString());
 
         dao.saveCelticUsers(user);
         dao.load(user);
