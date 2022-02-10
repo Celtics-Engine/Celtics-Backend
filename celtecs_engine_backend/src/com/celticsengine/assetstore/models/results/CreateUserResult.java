@@ -1,8 +1,5 @@
 package com.celticsengine.assetstore.models.results;
 
-import com.celticsengine.assetstore.models.UserModel;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 

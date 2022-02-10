@@ -5,7 +5,6 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.celticsengine.assetstore.dynamodb.CelticUsersDao;
 import com.celticsengine.assetstore.dynamodb.models.CelticUsers;
 import com.celticsengine.assetstore.exception.InvalidAttributeException;
-import com.celticsengine.assetstore.models.UserModel;
 import com.celticsengine.assetstore.models.requests.CreateUserRequest;
 import com.celticsengine.assetstore.models.results.CreateUserResult;
 
@@ -19,7 +18,6 @@ import java.util.UUID;
 public class CreateUserAtivity implements RequestHandler<CreateUserRequest, CreateUserResult> {
     private final Logger log = LogManager.getLogger();
     private final CelticUsersDao celticUsersDao;
-    private final UserModel userModel = new UserModel();
 
 
     @Inject

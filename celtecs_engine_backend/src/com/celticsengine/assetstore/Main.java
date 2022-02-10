@@ -1,7 +1,6 @@
 package com.celticsengine.assetstore;
 
 import com.celticsengine.assetstore.dependency.App;
-import com.celticsengine.assetstore.models.UserModel;
 import com.celticsengine.assetstore.models.requests.CreateUserRequest;
 import com.celticsengine.assetstore.models.results.CreateUserResult;
 
