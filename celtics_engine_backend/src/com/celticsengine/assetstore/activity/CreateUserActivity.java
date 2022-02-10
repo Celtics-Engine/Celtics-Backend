@@ -29,9 +29,13 @@ public class CreateUserActivity implements RequestHandler<CreateUserRequest, Cre
     public CreateUserResult handleRequest(final CreateUserRequest createUserRequest, Context context) {
         log.info("Received CreateUserRequest {}", createUserRequest);
 
-        if (celticUsersDao.getCelticUserFromUserName(createUserRequest.getUsername()) != null)     {
-            log.warn("User Already Exist");
-            throw new InvalidAttributeException("User Already Exist"); //FIXME: This shouldn't crash should return error code
+        try {
+            if (celticUsersDao.getCelticUserFromUserName(createUserRequest.getUsername()) != null)     {
+                log.warn("User Already Exist");
+            }
+        } catch (InvalidAttributeException e) {
+            log.error("Invalid Attribute Exception", e);
+            throw e;
         }
 
         CelticUsers celticUser = new CelticUsers();
