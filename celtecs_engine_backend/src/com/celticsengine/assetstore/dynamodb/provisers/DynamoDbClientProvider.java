@@ -17,7 +17,7 @@ public class DynamoDbClientProvider {
         if (null == region) {
             throw new IllegalArgumentException("region cannot be null");
         } else {
-            return (AmazonDynamoDB)((AmazonDynamoDBClientBuilder)((AmazonDynamoDBClientBuilder)AmazonDynamoDBClientBuilder.standard().withCredentials(DefaultAWSCredentialsProviderChain.getInstance())).withRegion(region)).build();
+            return AmazonDynamoDBClientBuilder.standard().withCredentials(DefaultAWSCredentialsProviderChain.getInstance()).withRegion(region).build();
         }
     }
 }
