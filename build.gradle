@@ -85,3 +85,8 @@ task buildZip(type: Zip) {
         from configurations.runtimeClasspath
     }
 }
+
+
+task prepareWrapper(type: Wrapper) {
+    gradleVersion = '7.0.2'
+}
