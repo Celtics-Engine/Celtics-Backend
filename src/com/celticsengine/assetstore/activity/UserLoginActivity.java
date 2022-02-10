@@ -32,12 +32,12 @@ public class UserLoginActivity implements RequestHandler<UserLoginRequest, UserL
 
         celticUsers = celticUsersDao.getCelticUserFromUserName(userLoginRequest.getUsername());
 
-        if (celticUsers.getPassword() != userLoginRequest.getPassword()) {
+        if (userLoginRequest.getPassword() == null || !celticUsers.getPassword().equals(userLoginRequest.getPassword())) {
             log.warn("Invalid Password");
             celticUsers = null;
             throw new InvalidAttributeValueException("Invalid Password");
         }
 
-        return UserLoginResult.builder().withCelticUser(celticUsers).build;
+        return UserLoginResult.builder().withCelticUsers(celticUsers).build();
     }
 }
