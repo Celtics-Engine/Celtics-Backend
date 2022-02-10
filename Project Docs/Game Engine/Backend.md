@@ -242,9 +242,9 @@ Gets the download link for the asset
 
 ## GetUser
 #### Discription
-Gets the User profile 
+Gets Users profiles 
 #### Parameters 
--  asin - userId
+-  asin - list of user ids
 
 ```json
 {
@@ -264,7 +264,7 @@ Gets the User profile
 Updates user information
 #### Parameters 
 - [JWT](https://jwt.io/) - Contains all user info as well `REQUIRED`
-- username - email
+- username - email `REQUIRED`
 
 ```json
 {
@@ -307,6 +307,7 @@ Updates user password
 #### Parameters 
 - [JWT](https://jwt.io/) - Contains all user info as well `REQUIRED`
 - password - users password `REQUIRED`
+- - newpassword - the new password `REQUIRED`
 
 ```json
 {
@@ -325,9 +326,9 @@ Updates user password
 
 
 
-## SearchAssests
+## SearchAssets `NEEDS WORK`
 #### Discription
-Searchs for the asset
+This should be able to take a list of any number of the assets attributes and find ones simlar to  
 #### Parameters 
 - name - assets name
 
