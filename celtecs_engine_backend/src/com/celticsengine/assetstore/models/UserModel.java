@@ -1,35 +1,27 @@
 package com.celticsengine.assetstore.models;
 
-import com.celticsengine.assetstore.models.requests.CreateUserRequest;
-import org.apache.commons.codec.cli.Digest;
-import org.apache.commons.codec.digest.DigestUtils;
-
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.UUID;
 
 public class UserModel {
-    private String asin = UUID.randomUUID().toString(); // TODO : check it does exist or no
+    private String userId;
     private String username;
     private String password;
     private String dateCreated = LocalDate.now().toString();
 
     public UserModel(String username, String password) {
-
         this.username = username;
-        this.password = DigestUtils.sha512(password).toString();
-
+        this.password = password;
     }
 
     public UserModel() {}
 
     public UserModel(UserModel.Builder builder) {
         this(builder().username, builder().password);
-
     }
 
-    public String getAsin() {
-        return asin;
+    public String getUserId() {
+        return userId;
     }
 
     public String getUsername() {
@@ -46,18 +38,18 @@ public class UserModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserModel userModel = (UserModel) o;
-        return getAsin().equals(userModel.getAsin()) && getUsername().equals(userModel.getUsername());
+        return getUserId().equals(userModel.getUserId()) && getUsername().equals(userModel.getUsername());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAsin(), getUsername());
+        return Objects.hash(getUserId(), getUsername());
     }
 
     @Override
     public String toString() {
         return "CreateUserRequest{" +
-                "asin='" + asin + '\'' +
+                "asin='" + userId + '\'' +
                 ", username='" + username + '\'' +
                 ", dateCreated='" + dateCreated + '\'' +
                 '}';

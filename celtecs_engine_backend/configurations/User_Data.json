@@ -3,7 +3,7 @@
     {
       "PutRequest": {
         "Item": {
-          "asin": {
+          "user_id": {
             "S": "B019HKJTCI"
           },
           "username": {
@@ -13,7 +13,7 @@
             "S": "aohfoafad"
           },
           "date_created": {
-            "S": "Dark Side of the Moon"
+            "S": "02-8-2022"
           }
         }
       }

@@ -3,10 +3,10 @@
     {
       "PutRequest": {
         "Item": {
-          "asin": {
+          "user_id": {
             "S": "IDHBG39788"
           },
-          "user_id": {
+          "asset_id": {
             "S": "B019HKJTCI"
           },
           "name": {
