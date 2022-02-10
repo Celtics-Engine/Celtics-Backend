@@ -9,21 +9,21 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 @DynamoDBTable(tableName = "celtic_users")
 public class CelticUsers {
 
-    private String asin;
+    private String userId;
     private String username;
     private String password;
     private String dateCreated;
 
-    @DynamoDBHashKey(attributeName = "asin")
-    public String getAsin() {
-        return asin;
+    @DynamoDBHashKey(attributeName = "user_id")
+    public String getUserId() {
+        return userId;
     }
 
-    public void setAsin(String asin) {
-        this.asin = asin;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    @DynamoDBRangeKey(attributeName = "username")
+    @DynamoDBAttribute(attributeName = "username")
     public String getUsername() {
         return username;
     }

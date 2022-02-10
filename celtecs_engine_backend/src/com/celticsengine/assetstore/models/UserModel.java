@@ -23,7 +23,6 @@ public class UserModel {
 
     public UserModel(UserModel.Builder builder) {
         this(builder().username, builder().password);
-
     }
 
     public String getAsin() {

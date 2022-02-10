@@ -50,8 +50,7 @@ public class CelticUsersDao {
             return null;
         }else {
             return dynamoDbMapper.load(CelticUsers.class,
-                    result.getItems().stream().findFirst().get().get("asin").getS()
-                    ,result.getItems().stream().findFirst().get().get("username").getS());
+                    result.getItems().stream().findFirst().get().get("user_id").getS());
         }
     }
 

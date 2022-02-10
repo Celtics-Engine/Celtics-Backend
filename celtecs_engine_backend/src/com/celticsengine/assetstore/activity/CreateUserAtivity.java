@@ -33,11 +33,11 @@ public class CreateUserAtivity implements RequestHandler<CreateUserRequest, Crea
         log.info("Received CreateUserRequest {}", createUserRequest);
 
         if (celticUsersDao.getCelticUserFromUserName(createUserRequest.getUsername()) != null)     {
-            throw new InvalidAttributeException("User Already Exist "); //FIXME: this should be something else
+            throw new InvalidAttributeException("User Already Exist"); //FIXME: this should be something else
         }
 
         CelticUsers celticUsers = new CelticUsers();
-        celticUsers.setAsin(UUID.randomUUID().toString());
+        celticUsers.setUserId(UUID.randomUUID().toString());
         celticUsers.setUsername(createUserRequest.getUsername());
         celticUsers.setPassword(createUserRequest.getPassword());
         celticUsers.setDateCreated(LocalDate.now().toString());
