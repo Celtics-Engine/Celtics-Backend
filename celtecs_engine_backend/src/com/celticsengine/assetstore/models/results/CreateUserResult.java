@@ -8,6 +8,7 @@ import io.jsonwebtoken.security.Keys;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.util.Date;
 
 
 public class CreateUserResult {
@@ -53,6 +54,7 @@ public class CreateUserResult {
                     .setSubject(user_id)
                     .claim("username", username)
                     .claim("date_created", dateCreated)
+                    .setExpiration(new Date(System.currentTimeMillis() + 86400000))
                     .signWith(key)
                     .compact());
         }
