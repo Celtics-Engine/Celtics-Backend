@@ -15,6 +15,9 @@ public class CreateUserRequest {
         this.password = Base64.getEncoder().encodeToString(DigestUtils.sha512(password));
     }
 
+    public CreateUserRequest() {
+    }
+
     public CreateUserRequest(Builder builder) {
         this(builder.username,builder.password);
     }
