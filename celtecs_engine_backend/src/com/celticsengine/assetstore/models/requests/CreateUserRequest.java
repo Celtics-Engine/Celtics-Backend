@@ -35,10 +35,8 @@ public class CreateUserRequest {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = Base64.getEncoder().encodeToString(DigestUtils.sha512(password));;
     }
-
-
 
     @Override
     public boolean equals(Object o) {

@@ -33,21 +33,24 @@ public class CreateUserAtivity implements RequestHandler<CreateUserRequest, Crea
         log.info("Received CreateUserRequest {}", createUserRequest);
 
         if (celticUsersDao.getCelticUserFromUserName(createUserRequest.getUsername()) != null)     {
-            throw new InvalidAttributeException("User Already Exist"); //FIXME: this should be something else
+            log.warn("User Already Exist");
+            throw new InvalidAttributeException("User Already Exist"); //FIXME: This shouldn't crash should return error code
         }
 
-        CelticUsers celticUsers = new CelticUsers();
-        celticUsers.setUserId(UUID.randomUUID().toString());
-        celticUsers.setUsername(createUserRequest.getUsername());
-        celticUsers.setPassword(createUserRequest.getPassword());
-        celticUsers.setDateCreated(LocalDate.now().toString());
+        CelticUsers celticUser = new CelticUsers();
+        celticUser.setUserId(UUID.randomUUID().toString());
+        celticUser.setUsername(createUserRequest.getUsername());
+        celticUser.setPassword(createUserRequest.getPassword());
+        celticUser.setDateCreated(LocalDate.now().toString());
 
 
-        celticUsersDao.saveCelticUsers(celticUsers);
+        celticUsersDao.saveCelticUsers(celticUser);
 
 
         return CreateUserResult.builder()
-                .withCelticUsers(new UserModel(createUserRequest.getUsername(),createUserRequest.getPassword()))
-                .build();
+                .withUserId(celticUser.getUserId())
+                .withUsername(celticUser.getUsername())
+                .withDateCreated(celticUser.getDateCreated())
+                .build(celticUser.getPassword());
     }
 }

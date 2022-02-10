@@ -15,7 +15,7 @@ public class Main {
 
 		CreateUserResult result = getApp().provideCreatePlaylistActivity().handleRequest(request, null);
 
-		System.out.println(result);
+		System.out.println(result.getJwt());
 
 	}
 
