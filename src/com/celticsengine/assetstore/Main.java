@@ -9,7 +9,7 @@ public class Main {
 
 	private static App app;
 
-
+	// Check if build is happening
 	public static void main(String[] args) {
 		CreateUserRequest request = new CreateUserRequest("example@example.com", "password");
 
