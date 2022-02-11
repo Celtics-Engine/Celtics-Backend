@@ -7,6 +7,6 @@ import javax.inject.Singleton;
 @Singleton
 @Component(modules = {Mappermodule.class})
 public interface ServiceComponent {
-    //CreateUserAtivity provideCreateUserActivity();
+	//CreateUserAtivity provideCreateUserActivity();
 
 }
