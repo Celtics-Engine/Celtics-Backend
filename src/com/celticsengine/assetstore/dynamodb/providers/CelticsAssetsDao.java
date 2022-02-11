@@ -6,7 +6,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.celticsengine.assetstore.dynamodb.models.CelticAssets;
-import com.celticsengine.assetstore.dynamodb.models.CelticUsers;
 
 import java.util.HashMap;
 import java.util.List;
