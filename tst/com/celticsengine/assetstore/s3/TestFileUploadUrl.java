@@ -1,9 +1,11 @@
 package com.celticsengine.assetstore.s3;
 
+import com.amazonaws.HttpMethod;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.Test;
@@ -21,18 +23,16 @@ public class TestFileUploadUrl {
 
 	@Test
 	void testfunc(){
-
-		String path = "uploads/new_folder_" + DateTime.now();
 		String newFileName = "build.gradle";
-		String fullFileName = path + "/" + newFileName;
-		String fileContents = "This is an example file created through the Amazon S3 API.";
-
-		s3Client.putObject(new PutObjectRequest("nonexsistantbucketboy", fullFileName, fileContents));
 
 
-		URL url = s3Client.generatePresignedUrl("nonexsistantbucketboy",
-				fullFileName,
-				DateTime.now().plusMinutes(10).toDate());
+		GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(
+				"nonexsistantbucketboy",
+				newFileName,
+				HttpMethod.PUT)
+				.withExpiration(DateTime.now().plusMinutes(10).toDate());
+
+		URL url = s3Client.generatePresignedUrl(request);
 
 		System.out.println(url.toString());
 	}
