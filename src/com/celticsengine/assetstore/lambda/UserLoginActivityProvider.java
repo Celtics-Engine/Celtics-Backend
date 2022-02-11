@@ -7,23 +7,23 @@ import com.celticsengine.assetstore.models.requests.UserLoginRequest;
 import com.celticsengine.assetstore.models.results.UserLoginResult;
 
 public class UserLoginActivityProvider implements RequestHandler<UserLoginRequest, UserLoginResult> {
-    private static App app;
+	private static App app;
 
-    public UserLoginActivityProvider() {
+	public UserLoginActivityProvider() {
 
-    }
+	}
 
 
-    @Override
-    public UserLoginResult handleRequest(UserLoginRequest userLoginRequest, Context context) {
-        return getApp().provideUserLoginActivityProvider().handleRequest(userLoginRequest, context);
-    }
+	@Override
+	public UserLoginResult handleRequest(UserLoginRequest userLoginRequest, Context context) {
+		return getApp().provideUserLoginActivityProvider().handleRequest(userLoginRequest, context);
+	}
 
-    private App getApp() {
-        if (app == null) {
-            app = new App();
-        }
+	private App getApp() {
+		if (app == null) {
+			app = new App();
+		}
 
-        return app;
-    }
+		return app;
+	}
 }

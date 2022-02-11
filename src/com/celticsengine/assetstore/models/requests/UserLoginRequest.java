@@ -6,32 +6,32 @@ import java.util.Base64;
 import java.util.Objects;
 
 public class UserLoginRequest {
-    private String username;
-    private String password;
+	private final String username;
+	private final String password;
 
-    public UserLoginRequest(String username, String password) {
-        this.username = username;
-        this.password = Base64.getEncoder().encodeToString(DigestUtils.sha512(password));
-    }
+	public UserLoginRequest(String username, String password) {
+		this.username = username;
+		this.password = Base64.getEncoder().encodeToString(DigestUtils.sha512(password));
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserLoginRequest that = (UserLoginRequest) o;
-        return getUsername().equals(that.getUsername()) && getPassword().equals(that.getPassword());
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		UserLoginRequest that = (UserLoginRequest) o;
+		return getUsername().equals(that.getUsername()) && getPassword().equals(that.getPassword());
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getUsername(), getPassword());
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(getUsername(), getPassword());
+	}
 }

@@ -1,9 +1,10 @@
 package com.celticsengine.assetstore;
 
 import com.celticsengine.assetstore.dependency.App;
-import com.celticsengine.assetstore.dynamodb.models.CelticUsers;
+import com.celticsengine.assetstore.dynamodb.models.CelticUser;
 import com.celticsengine.assetstore.models.requests.CreateUserRequest;
-import com.celticsengine.assetstore.models.results.CreateUserResult;
+import com.celticsengine.assetstore.models.requests.UserLoginRequest;
+import com.celticsengine.assetstore.models.results.UserLoginResult;
 
 public class Main {
 
@@ -12,15 +13,13 @@ public class Main {
 
 	public static void main(String[] args) {
 		CreateUserRequest request = new CreateUserRequest("example@example.com", "password");
+		UserLoginRequest userLoginRequest = new UserLoginRequest("example@example.com", "password");
 
-		CreateUserResult result = getApp().provideCreatePlaylistActivity().handleRequest(request,
-				null);
+		//UserLoginResult result = getApp().provideCreatePlaylistActivity().handleRequest(request, null);
 
-		CelticUsers users = new CelticUsers();
-		users.setUsername(request.getUsername());
-		users.setPassword(request.getPassword());
+		UserLoginResult result = getApp().provideUserLoginActivityProvider().handleRequest(userLoginRequest,null);
 
-		System.out.println(users.getUsername() + " ///////" + users.getPassword());
+		System.out.println(result.getJwt());
 
 	}
 

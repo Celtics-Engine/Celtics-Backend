@@ -7,74 +7,75 @@ import java.util.Objects;
 
 public class CreateUserRequest {
 
-    private String username;
-    private String password;
+	private String username;
+	private String password;
 
-    public CreateUserRequest(String username, String password) {
-        this.username = Base64.getEncoder().encodeToString(DigestUtils.sha512(username));
-        this.password = Base64.getEncoder().encodeToString(DigestUtils.sha512(password));
-    }
+	public CreateUserRequest(String username, String password) {
+		this.username = username;
+		this.password = Base64.getEncoder().encodeToString(DigestUtils.sha512(password));
+	}
 
-    public CreateUserRequest() {
-    }
+	public CreateUserRequest() {
+	}
 
-    public CreateUserRequest(Builder builder) {
-        this(builder.username,builder.password);
-    }
+	public CreateUserRequest(Builder builder) {
+		this(builder.username, builder.password);
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public static Builder builder() {
+		return new Builder();
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public void setPassword(String password) {
-        this.password = Base64.getEncoder().encodeToString(DigestUtils.sha512(password));
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CreateUserRequest that = (CreateUserRequest) o;
-        return getUsername().equals(that.getUsername()) && Objects.equals(getPassword(), that.getPassword());
-    }
+	public void setPassword(String password) {
+		this.password = Base64.getEncoder().encodeToString(DigestUtils.sha512(password));
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getUsername(), getPassword());
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		CreateUserRequest that = (CreateUserRequest) o;
+		return getUsername().equals(that.getUsername()) && Objects.equals(getPassword(), that.getPassword());
+	}
 
-    public static Builder builder() {
-        return new Builder();
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(getUsername(), getPassword());
+	}
 
-    public static final class Builder {
+	public static final class Builder {
 
-        private String username;
-        private String password;
+		private String username;
+		private String password;
 
-        private Builder() {
+		private Builder() {
 
-        }
-        public Builder withUsername(String usernameToUse) {
-            this.username = usernameToUse;
-            return this;
-        }
+		}
 
-        public Builder withPassword(String passwordToUse) {
-            this.password = passwordToUse;
-            return this;
-        }
+		public Builder withUsername(String usernameToUse) {
+			this.username = usernameToUse;
+			return this;
+		}
 
-        public CreateUserRequest build() {
-            return new CreateUserRequest(this);
-        }
-    }
+		public Builder withPassword(String passwordToUse) {
+			this.password = passwordToUse;
+			return this;
+		}
+
+		public CreateUserRequest build() {
+			return new CreateUserRequest(this);
+		}
+	}
 }

@@ -1,7 +1,7 @@
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.celticsengine.assetstore.dynamodb.CelticUsersDao;
-import com.celticsengine.assetstore.dynamodb.models.CelticUsers;
+import com.celticsengine.assetstore.dynamodb.models.CelticUser;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ public class DynamodbTest {
     private CelticUsersDao dao;
 
     @Mock
-    CelticUsers user = new CelticUsers();
+    CelticUser user = new CelticUser();
 
     @BeforeEach
     void setup() {

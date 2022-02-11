@@ -12,10 +12,10 @@ import javax.inject.Singleton;
 @Module
 public class Mappermodule {
 
-    @Singleton
-    @Provides
-    public DynamoDBMapper provideDynamoDBMapper() {
-        return new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_2));
-    }
+	@Singleton
+	@Provides
+	public DynamoDBMapper provideDynamoDBMapper() {
+		return new DynamoDBMapper(DynamoDbClientProvider.getDynamoDBClient(Regions.US_WEST_2));
+	}
 }
 
