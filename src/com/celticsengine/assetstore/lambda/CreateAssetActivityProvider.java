@@ -3,21 +3,22 @@ package com.celticsengine.assetstore.lambda;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.celticsengine.assetstore.dependency.App;
+import com.celticsengine.assetstore.models.requests.CreateAssetRequest;
 import com.celticsengine.assetstore.models.requests.CreateUserRequest;
+import com.celticsengine.assetstore.models.results.CreateAssetResult;
 import com.celticsengine.assetstore.models.results.CreateUserResult;
 
-public class CreateUserActivityProvider implements RequestHandler<CreateUserRequest, CreateUserResult> {
-
+public class CreateAssetActivityProvider implements RequestHandler<CreateAssetRequest, CreateAssetResult> {
 
     private static App app;
 
-    public CreateUserActivityProvider() {
+    public CreateAssetActivityProvider() {
 
     }
 
     @Override
-    public CreateUserResult handleRequest(final CreateUserRequest createPlaylistRequest, Context context) {
-        return getApp().provideCreateUserActivity().handleRequest(createPlaylistRequest, context);
+    public CreateAssetResult handleRequest(final CreateAssetRequest createAssetRequest, Context context) {
+        return getApp().provideCreateAssetActivity().handleRequest(createAssetRequest, context);
     }
 
     private App getApp() {
@@ -27,7 +28,4 @@ public class CreateUserActivityProvider implements RequestHandler<CreateUserRequ
 
         return app;
     }
-
-
 }
-
