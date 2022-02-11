@@ -1,66 +1,75 @@
 package com.celticsengine.assetstore.s3;
 
 import com.amazonaws.AmazonServiceException;
-import com.amazonaws.SdkClientException;
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.AmazonS3Exception;
-import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.CreateBucketRequest;
-import com.amazonaws.services.s3.model.GetBucketLocationRequest;
+import com.amazonaws.services.s3.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Objects;
 
 class CreateBucketTest {
 
     private static final Regions clientRegion = Regions.US_WEST_2;
     private final Logger log = LogManager.getLogger();
+    String bucketName = "celtics-asset-store-bucket-test";
+
+    AmazonS3 s3Client;
+
+
+    @BeforeEach
+    void setUp() {
+        try {
+            s3Client = AmazonS3ClientBuilder.standard().withRegion(clientRegion).build();
+            System.out.println("S3 client is built.");
+            System.out.printf("%n");
+        } catch (AmazonServiceException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    @AfterEach
+    public void tearDown() {
+        s3Client.shutdown();
+    }
 
     @Test
     void testCreateBucket() {
-        String bucketName = "jim";
-
-        Bucket bucket = createBucket(bucketName);
-
-        System.out.println(bucket);
-
-    }
-
-
-
-    public static Bucket createBucket(String bucket_name) {
-        final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(clientRegion).build();
         Bucket b = null;
-        if (s3.doesBucketExistV2(bucket_name)) {
-            System.out.format("Bucket %s already exists.\n", bucket_name);
-            b = getBucket(bucket_name);
+        if (s3Client.doesBucketExistV2(bucketName)) {
+            System.out.format("Bucket %s already exists.\n", bucketName);
+            b = getBucket();
         } else {
             try {
-                b = s3.createBucket(bucket_name);
+                b = s3Client.createBucket(bucketName);
+                log.info(String.format("Bucket %s created.\n", bucketName));
             } catch (AmazonS3Exception e) {
                 System.err.println(e.getErrorMessage());
             }
         }
-        return b;
+
+
+        assert b == null || b.getName().equals(bucketName);
+
+        System.out.println(Objects.requireNonNull(b).getName());
     }
 
-    public static Bucket getBucket(String bucket_name) {
-        final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(clientRegion).build();
+    Bucket getBucket() {
         Bucket named_bucket = null;
-        List<Bucket> buckets = s3.listBuckets();
+        List<Bucket> buckets = s3Client.listBuckets();
         for (Bucket b : buckets) {
-            if (b.getName().equals(bucket_name)) {
+            if (b.getName().equals(this.bucketName)) {
                 named_bucket = b;
             }
         }
         return named_bucket;
     }
-
 }
+

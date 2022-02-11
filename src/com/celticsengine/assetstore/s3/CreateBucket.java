@@ -10,17 +10,7 @@ import java.util.List;
 
 public class CreateBucket {
 
-    public static Bucket getBucket(String bucket_name) {
-        final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.DEFAULT_REGION).build();
-        Bucket named_bucket = null;
-        List<Bucket> buckets = s3.listBuckets();
-        for (Bucket b : buckets) {
-            if (b.getName().equals(bucket_name)) {
-                named_bucket = b;
-            }
-        }
-        return named_bucket;
-    }
+    String bucketName = "celtics-asset-store"; // TODO: this should be the single bucket name we use (dnt use _'s)
 
     public static Bucket createBucket(String bucket_name) {
         final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.DEFAULT_REGION).build();
@@ -36,5 +26,17 @@ public class CreateBucket {
             }
         }
         return b;
+    }
+
+    public static Bucket getBucket(String bucket_name) {
+        final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.DEFAULT_REGION).build();
+        Bucket named_bucket = null;
+        List<Bucket> buckets = s3.listBuckets();
+        for (Bucket b : buckets) {
+            if (b.getName().equals(bucket_name)) {
+                named_bucket = b;
+            }
+        }
+        return named_bucket;
     }
 }
