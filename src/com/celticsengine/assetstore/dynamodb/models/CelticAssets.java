@@ -1,9 +1,6 @@
 package com.celticsengine.assetstore.dynamodb.models;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.util.Set;
 
@@ -14,14 +11,14 @@ public class CelticAssets {
    private String assetId;
    private String name ;
    private String assetLocation;
-   private String discription;
+   private String description;
    private Set<String> images;
    private double fileSize;
    private String downloads;
-   private String compatableEngineVer;
+   private String compatibleEngineVer;
    private String datePosted;
 
-   @DynamoDBHashKey(attributeName = "user_id")
+    @DynamoDBHashKey(attributeName = "user_id")
     public String getUserId() {
         return userId;
     }
@@ -58,12 +55,12 @@ public class CelticAssets {
     }
 
     @DynamoDBAttribute(attributeName = "description")
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDiscription(String discription) {
-        this.discription = discription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @DynamoDBAttribute(attributeName = "images")
@@ -93,13 +90,13 @@ public class CelticAssets {
         this.downloads = downloads;
     }
 
-    @DynamoDBAttribute(attributeName = "compatable_engine_ver")
-    public String getCompatableEngineVer() {
-        return compatableEngineVer;
+    @DynamoDBAttribute(attributeName = "compatible_engine_ver")
+    public String getCompatibleEngineVer() {
+        return compatibleEngineVer;
     }
 
-    public void setCompatableEngineVer(String compatableEngineVer) {
-        this.compatableEngineVer = compatableEngineVer;
+    public void setCompatibleEngineVer(String compatibleEngineVer) {
+        this.compatibleEngineVer = compatibleEngineVer;
     }
 
     @DynamoDBAttribute(attributeName = "date_created")
@@ -109,5 +106,16 @@ public class CelticAssets {
 
     public void setDatePosted(String datePosted) {
         this.datePosted = datePosted;
+    }
+
+    public S3Link assetImage;
+
+    @DynamoDBAttribute(attributeName = "asset_image")
+    public S3Link getProductImage() {
+        return assetImage;
+    }
+
+    public void setProductImage(S3Link assetImage) {
+        this.assetImage = assetImage;
     }
 }
