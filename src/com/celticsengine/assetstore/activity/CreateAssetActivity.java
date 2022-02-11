@@ -3,7 +3,10 @@ package com.celticsengine.assetstore.activity;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.celticsengine.assetstore.dynamodb.CelticAssetsDao;
+import com.celticsengine.assetstore.dynamodb.CelticUsersDao;
 import com.celticsengine.assetstore.dynamodb.models.CelticAssets;
+import com.celticsengine.assetstore.dynamodb.models.CelticUsers;
+import com.celticsengine.assetstore.exception.CelticUsersNotFoundException;
 import com.celticsengine.assetstore.models.requests.CreateAssetRequest;
 import com.celticsengine.assetstore.models.results.CreateAssetResult;
 import io.jsonwebtoken.JwtException;
@@ -22,11 +25,13 @@ public class CreateAssetActivity implements RequestHandler<CreateAssetRequest, C
 
     private final Logger log = LogManager.getLogger();
     private final CelticAssetsDao celticAssetsDao;
+    private final CelticUsersDao celticUsersDao;
 
 
     @Inject
-    public CreateAssetActivity(CelticAssetsDao celticAssetsDao) {
+    public CreateAssetActivity(CelticAssetsDao celticAssetsDao, CelticUsersDao celticUsersDao) {
         this.celticAssetsDao = celticAssetsDao;
+        this.celticUsersDao = celticUsersDao;
     }
 
 
@@ -35,54 +40,60 @@ public class CreateAssetActivity implements RequestHandler<CreateAssetRequest, C
         log.info("Received CreateAssetRequest {}", createAssetRequest);
 
 // Check if token is valid
-        try {
-            if (Jwts.parserBuilder().build().parseClaimsJws(createAssetRequest.getJwt()) != null) {
-                // grab jwt
-                // verify that JWT belongs to the user
-                // take the user id from JWT
-                // grab from DAO saved last user
-                // re create JWT
-                // check if they are the same
 
-            };
+
+        try {
+
+            int i = createAssetRequest.getJwt().lastIndexOf('.');
+            String withoutSignature = createAssetRequest.getJwt().substring(0, i+1);
+            String userId = Jwts.parserBuilder().build().parseClaimsJwt(withoutSignature).getBody().getSubject();
+
+
+            CelticUsers celticUsers = celticUsersDao.getCelticUsers(userId);
+
+            if (celticUsers != null) {
+                Key key = Keys.hmacShaKeyFor(celticUsers.getPassword().getBytes(StandardCharsets.UTF_8));
+
+                   Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(createAssetRequest.getJwt());
+            } else {
+                throw new CelticUsersNotFoundException("The userId does not exsit");
+            }
+
+
+            CelticAssets celticAssets = new CelticAssets();
+            celticAssets.setUserId(userId);
+            celticAssets.setAssetId(UUID.randomUUID().toString());
+            celticAssets.setName(createAssetRequest.getName());
+            celticAssets.setAssetLocation(celticAssets.getAssetLocation());
+            celticAssets.setDiscription(celticAssets.getDiscription());
+            celticAssets.setImages(celticAssets.getImages());
+            celticAssets.setBucketId(celticAssets.getBucketId());
+            celticAssets.setCompatableEngineVer(celticAssets.getCompatableEngineVer());
+            celticAssets.setDatePosted(LocalDate.now().toString());
+
+            celticAssetsDao.saveCelticAssets(celticAssets);
+
+
+            return CreateAssetResult.builder()
+                    .withUserId(celticAssets.getUserId())
+                    .withAssetId(celticAssets.getAssetId())
+                    .withName(celticAssets.getName())
+                    .withAssetLocation(celticAssets.getAssetLocation())
+                    .withDiscription(celticAssets.getDiscription())
+                    .withImages(celticAssets.getImages())
+                    .withFileSize(celticAssets.getFileSize())
+                    .withBucketId(celticAssets.getBucketId())
+                    .withCompatableEngineVer(celticAssets.getCompatableEngineVer())
+                    .withDatePosted(celticAssets.getDatePosted())
+                    .build();
 
             //OK, we can trust this JWT
 
         } catch (JwtException e) {
+            e.printStackTrace();
+            return null;
 
             //don't trust the JWT!
         }
-
-
-        CelticAssets celticAssets = new CelticAssets();
-        celticAssets.setUserId( Jwts.parserBuilder().build().parseClaimsJws(createAssetRequest
-                                                    .getJwt()).getBody().getSubject());
-        celticAssets.setAssetId(UUID.randomUUID().toString());
-        celticAssets.setName(createAssetRequest.getName());
-        celticAssets.setAssetLocation(celticAssets.getAssetLocation());
-        celticAssets.setDiscription(celticAssets.getDiscription());
-        celticAssets.setImages(celticAssets.getImages());
-        celticAssets.setBucketId(celticAssets.getBucketId());
-        celticAssets.setCompatableEngineVer(celticAssets.getCompatableEngineVer());
-        celticAssets.setDatePosted(LocalDate.now().toString());
-
-
-        celticAssetsDao.saveCelticAssets(celticAssets);
-
-
-        return CreateAssetResult.builder()
-                .withUserId(celticAssets.getUserId())
-                .withAssetId(celticAssets.getAssetId())
-                .withName(celticAssets.getName())
-                .withAssetLocation(celticAssets.getAssetLocation())
-                .withDiscription(celticAssets.getDiscription())
-                .withImages(celticAssets.getImages())
-                .withFileSize(celticAssets.getFileSize())
-                .withBucketId(celticAssets.getBucketId())
-                .withCompatableEngineVer(celticAssets.getCompatableEngineVer())
-                .withDatePosted(celticAssets.getDatePosted())
-                .build();
-
     }
-
 }

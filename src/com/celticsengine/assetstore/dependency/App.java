@@ -21,7 +21,7 @@ public class App {
         return new CreateUserActivity(provideCelticUsersDao());
     }
     public CreateAssetActivity provideCreateAssetActivity() {
-        return new CreateAssetActivity(provideCelticAssetsDao());
+        return new CreateAssetActivity(provideCelticAssetsDao(), provideCelticUsersDao());
     }
 
 
