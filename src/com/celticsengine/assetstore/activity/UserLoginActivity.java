@@ -23,18 +23,32 @@ public class UserLoginActivity implements RequestHandler<UserLoginRequest, UserL
 	public UserLoginResult handleRequest(UserLoginRequest userLoginRequest, Context context) {
 		log.info("Requested UserLoginRequest {}", userLoginRequest);
 
-		if (celticUsersDao.getCelticUserFromUserName(userLoginRequest.getUsername()) == null) {
-			log.warn("Username Does Not Exist"); // FIXME: Possibility of crash (like in CreateUserActivity line 37)
-			throw new CelticUsersNotFoundException("Username Does Not Exist");
+		try {
+			CelticUser celticUser = celticUsersDao.getCelticUserFromUserName(userLoginRequest.getUsername());
+
+			if (celticUser == null) {
+				log.warn(celticUser);
+				throw new CelticUsersNotFoundException("Invalid Username");
+			}
+
+			if (userLoginRequest.getPassword() == null || !celticUser.getPassword().equals(userLoginRequest.getPassword())) {
+				log.warn("Invalid Password");
+				celticUser = null;
+				throw new InvalidAttributeValueException("Invalid Password");
+			}
+
+			return UserLoginResult.builder()
+					.createFromCelticUser(celticUser)
+					.build(celticUser.getPassword());
+
+		} catch (CelticUsersNotFoundException e) {
+			log.error("Invalid Username", e.getMessage());
+
+		} catch (InvalidAttributeValueException e) {
+			log.error("Invalid Password", e.getMessage());
+
 		}
 
-		CelticUser celticUser = celticUsersDao.getCelticUserFromUserName(userLoginRequest.getUsername());
-
-		if (userLoginRequest.getPassword() == null || !celticUser.getPassword().equals(userLoginRequest.getPassword())) {
-			log.warn("Invalid Password");
-			throw new InvalidAttributeValueException("Invalid Password");
-		}
-
-		return UserLoginResult.builder().createFromCelticUser(celticUser).build(celticUser.getPassword());
+		return null;
 	}
 }
