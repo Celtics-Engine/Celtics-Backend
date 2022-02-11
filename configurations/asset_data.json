@@ -19,10 +19,10 @@
             "S": "Dark Side of the Moon"
           },
           "images": {
-            "SS": "[]"
+            "SS": ["camera", "fox"]
           },
           "file_size": {
-            "N": "100 MB"
+            "S": "100 MB"
           },
           "compatable_engine_ver": {
             "S": "0.0.1"
@@ -30,8 +30,8 @@
           "date_created": {
             "S": "02-8-2022"
           },
-          "downloads": {
-            "S": "02-8-2022"
+          "bucket_id": {
+            "S": "https://usa.kaspersky.com/resource-center/definitions/encryption"
           }
         }
       }
