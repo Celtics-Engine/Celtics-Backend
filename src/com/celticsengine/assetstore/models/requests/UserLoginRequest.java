@@ -6,8 +6,13 @@ import java.util.Base64;
 import java.util.Objects;
 
 public class UserLoginRequest {
-	private final String username;
-	private final String password;
+	private String username;
+	private String password;
+
+
+	public UserLoginRequest() {
+
+	}
 
 	public UserLoginRequest(String username, String password) {
 		this.username = username;
@@ -20,6 +25,14 @@ public class UserLoginRequest {
 
 	public String getPassword() {
 		return password;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = Base64.getEncoder().encodeToString(DigestUtils.sha512(password));
 	}
 
 	@Override
