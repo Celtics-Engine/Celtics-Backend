@@ -10,8 +10,15 @@ import java.util.List;
 
 public class CreateBucket {
 
-    String bucketName = "celtics-asset-store"; // TODO: this should be the single bucket name we use (dnt use _'s)
 
+    /**
+     * @Deprecated
+     *
+     * We don't need this because we are only using a single bucket, but we are still leaving it in for now
+     *
+     * @param bucket_name the bucket name
+     * @return the bucket
+     */
     public static Bucket createBucket(String bucket_name) {
         final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.DEFAULT_REGION).build();
         Bucket b = null;

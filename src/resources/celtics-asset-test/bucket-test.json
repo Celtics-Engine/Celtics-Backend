@@ -1,0 +1,40 @@
+{
+  "celtic_assets": [
+    {
+      "PutRequest": {
+        "Item": {
+          "user_id": {
+            "S": "IDHBG39788"
+          },
+          "asset_id": {
+            "S": "B019HKJTCI"
+          },
+          "name": {
+            "S": "Cool Asset"
+          },
+          "asset_location": {
+            "S": "S3 File download"
+          },
+          "description": {
+            "S": "Dark Side of the Moon"
+          },
+          "images": {
+            "SS": "[]"
+          },
+          "file_size": {
+            "N": "100 MB"
+          },
+          "compatable_engine_ver": {
+            "S": "0.0.1"
+          },
+          "date_created": {
+            "S": "02-8-2022"
+          },
+          "downloads": {
+            "S": "02-8-2022"
+          }
+        }
+      }
+    }
+  ]
+}

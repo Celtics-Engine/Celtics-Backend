@@ -33,13 +33,13 @@ public class TestFileUploadUrl {
 	 *
 	 */
 	@Test
-	void generatePresignedUrl_retrievalOfBucketObject(){
+	void generatePresignedUrl_retrievalOfBucketObject() {
 	String newFileName = "build.gradle";
 
 		GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(
 				"nonexsistantbucketboy",
 				newFileName,
-				HttpMethod.PUT)
+				HttpMethod.GET)
 				.withExpiration(DateTime.now().plusMinutes(10).toDate());
 
 		URL url = s3Client.generatePresignedUrl(request);
