@@ -33,7 +33,6 @@ public class UserLoginActivity implements RequestHandler<UserLoginRequest, UserL
 
 			if (userLoginRequest.getPassword() == null || !celticUser.getPassword().equals(userLoginRequest.getPassword())) {
 				log.warn("Invalid Password {}", userLoginRequest.getPassword());
-				celticUser = null;
 				throw new InvalidAttributeValueException("Invalid Password");
 			}
 
