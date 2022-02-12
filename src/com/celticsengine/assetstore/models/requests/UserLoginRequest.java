@@ -9,9 +9,7 @@ public class UserLoginRequest {
 	private String username;
 	private String password;
 
-
 	public UserLoginRequest() {
-
 	}
 
 	public UserLoginRequest(String username, String password) {

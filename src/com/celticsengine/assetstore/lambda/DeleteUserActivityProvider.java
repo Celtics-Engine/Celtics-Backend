@@ -1,2 +1,4 @@
-package com.celticsengine.assetstore.lambda;public class DeleteUserActivityProvider {
+package com.celticsengine.assetstore.lambda;
+
+public class DeleteUserActivityProvider {
 }

@@ -82,4 +82,8 @@ public class CelticUsersDao {
 		this.dynamoDbMapper.save(celticUser);
 	}
 
+	public void deleteCelticUser(CelticUser celticUser) {
+		this.dynamoDbMapper.delete(celticUser);
+	}
+
 }
