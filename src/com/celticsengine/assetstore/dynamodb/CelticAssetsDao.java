@@ -6,8 +6,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
-import com.celticsengine.assetstore.dynamodb.models.CelticAssets;
-import com.celticsengine.assetstore.dynamodb.models.CelticUsers;
+import com.celticsengine.assetstore.dynamodb.models.CelticAsset;
+import com.celticsengine.assetstore.dynamodb.models.CelticUser;
 import com.celticsengine.assetstore.exception.CelticUsersNotFoundException;
 
 import java.util.HashMap;
@@ -25,11 +25,11 @@ public class CelticAssetsDao {
         this.dynamoDbMapper = new DynamoDBMapper(client);
     }
 
-    public void load(CelticUsers celticUsers) {
+    public void load(CelticAsset celticUsers) {
         this.dynamoDbMapper.load(celticUsers);
     }
 
-    public CelticUsers getCelticAssetsFromUserName(String username) {
+    public CelticAsset getCelticAssetsFromUserName(String username) {
 
         Map<String, AttributeValue> names = new HashMap<>();
 
@@ -47,13 +47,13 @@ public class CelticAssetsDao {
         if(result.getItems().stream().findFirst().isEmpty()){
             return null;
         }else {
-            return dynamoDbMapper.load(CelticUsers.class,
+            return dynamoDbMapper.load(CelticAsset.class,
                     result.getItems().stream().findFirst().get().get("user_id").getS());
         }
     }
 
     // probably doesn't work
-    public CelticAssets getCelticAssetsScan(String id) {
+    public CelticAsset getCelticAssetsScan(String id) {
         ScanRequest scanRequest = new ScanRequest()
                 .withTableName("CelticUsers")
                 .withFilterExpression("id = :id")
@@ -67,19 +67,19 @@ public class CelticAssetsDao {
             throw new CelticUsersNotFoundException(id);
         }
 
-        return dynamoDbMapper.marshallIntoObject(CelticAssets.class, scanResult.getItems().get(0));
+        return dynamoDbMapper.marshallIntoObject(CelticAsset.class, scanResult.getItems().get(0));
     }
 
 
-    public CelticAssets getCelticAssets(String userId, String assertId) {
-        CelticAssets celticAsssets = this.dynamoDbMapper.load(CelticAssets.class, userId, assertId);
+    public CelticAsset getCelticAssets(String userId, String assertId) {
+        CelticAsset celticAsssets = this.dynamoDbMapper.load(CelticAsset.class, userId, assertId);
         if (celticAsssets == null) {
             throw new CelticUsersNotFoundException("Could not find playlist with id " + userId + assertId);
         }
         return celticAsssets;
     }
 
-    public void saveCelticAssets(CelticAssets celticAsssets) {
+    public void saveCelticAssets(CelticAsset celticAsssets) {
         this.dynamoDbMapper.save(celticAsssets);
     }
 

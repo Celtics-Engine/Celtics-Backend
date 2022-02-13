@@ -4,8 +4,8 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.celticsengine.assetstore.dynamodb.CelticAssetsDao;
 import com.celticsengine.assetstore.dynamodb.CelticUsersDao;
-import com.celticsengine.assetstore.dynamodb.models.CelticAssets;
-import com.celticsengine.assetstore.dynamodb.models.CelticUsers;
+import com.celticsengine.assetstore.dynamodb.models.CelticAsset;
+import com.celticsengine.assetstore.dynamodb.models.CelticUser;
 import com.celticsengine.assetstore.exception.CelticUsersNotFoundException;
 import com.celticsengine.assetstore.models.requests.CreateAssetRequest;
 import com.celticsengine.assetstore.models.results.CreateAssetResult;
@@ -49,7 +49,7 @@ public class CreateAssetActivity implements RequestHandler<CreateAssetRequest, C
             String userId = Jwts.parserBuilder().build().parseClaimsJwt(withoutSignature).getBody().getSubject();
 
 
-            CelticUsers celticUsers = celticUsersDao.getCelticUsers(userId);
+            CelticUser celticUsers = celticUsersDao.getCelticUsers(userId);
 
             if (celticUsers != null) {
                 Key key = Keys.hmacShaKeyFor(celticUsers.getPassword().getBytes(StandardCharsets.UTF_8));
@@ -60,31 +60,31 @@ public class CreateAssetActivity implements RequestHandler<CreateAssetRequest, C
             }
 
 
-            CelticAssets celticAssets = new CelticAssets();
-            celticAssets.setUserId(userId);
-            celticAssets.setAssetId(UUID.randomUUID().toString());
-            celticAssets.setName(createAssetRequest.getName());
-            celticAssets.setAssetLocation(celticAssets.getAssetLocation());
-            celticAssets.setDiscription(celticAssets.getDiscription());
-            celticAssets.setImages(celticAssets.getImages());
-            celticAssets.setBucketId(celticAssets.getBucketId());
-            celticAssets.setCompatableEngineVer(celticAssets.getCompatableEngineVer());
-            celticAssets.setDatePosted(LocalDate.now().toString());
+            CelticAsset celticAsset = new CelticAsset();
+            celticAsset.setUserId(userId);
+            celticAsset.setAssetId(UUID.randomUUID().toString());
+            celticAsset.setName(createAssetRequest.getName());
+            celticAsset.setAssetLocation(celticAsset.getAssetLocation());
+            celticAsset.setDescription(celticAsset.getDescription());
+            celticAsset.setImages(celticAsset.getImages());
+            celticAsset.setBucketId(celticAsset.getBucketId());
+            celticAsset.setCompatibleEngineVer(celticAsset.getCompatibleEngineVer());
+            celticAsset.setDatePosted(LocalDate.now().toString());
 
-            celticAssetsDao.saveCelticAssets(celticAssets);
+            celticAssetsDao.saveCelticAssets(celticAsset);
 
 
             return CreateAssetResult.builder()
-                    .withUserId(celticAssets.getUserId())
-                    .withAssetId(celticAssets.getAssetId())
-                    .withName(celticAssets.getName())
-                    .withAssetLocation(celticAssets.getAssetLocation())
-                    .withDiscription(celticAssets.getDiscription())
-                    .withImages(celticAssets.getImages())
-                    .withFileSize(celticAssets.getFileSize())
-                    .withBucketId(celticAssets.getBucketId())
-                    .withCompatableEngineVer(celticAssets.getCompatableEngineVer())
-                    .withDatePosted(celticAssets.getDatePosted())
+                    .withUserId(celticAsset.getUserId())
+                    .withAssetId(celticAsset.getAssetId())
+                    .withName(celticAsset.getName())
+                    .withAssetLocation(celticAsset.getAssetLocation())
+                    .withDiscription(celticAsset.getDescription())
+                    .withImages(celticAsset.getImages())
+                    .withFileSize(celticAsset.getFileSize())
+                    .withBucketId(celticAsset.getBucketId())
+                    .withCompatableEngineVer(celticAsset.getCompatibleEngineVer())
+                    .withDatePosted(celticAsset.getDatePosted())
                     .build();
 
             //OK, we can trust this JWT

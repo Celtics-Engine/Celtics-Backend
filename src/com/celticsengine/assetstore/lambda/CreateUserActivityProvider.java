@@ -17,7 +17,7 @@ public class CreateUserActivityProvider implements RequestHandler<CreateUserRequ
 
 	@Override
 	public UserLoginResult handleRequest(final CreateUserRequest createPlaylistRequest, Context context) {
-		return getApp().provideCreatePlaylistActivity().handleRequest(createPlaylistRequest, context);
+		return getApp().provideCreateUserActivity().handleRequest(createPlaylistRequest, context);
 	}
 
 	private App getApp() {

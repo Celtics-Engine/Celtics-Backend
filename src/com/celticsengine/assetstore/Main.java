@@ -1,17 +1,9 @@
 package com.celticsengine.assetstore;
 
 import com.celticsengine.assetstore.dependency.App;
-import com.celticsengine.assetstore.dynamodb.models.CelticAssets;
-import com.celticsengine.assetstore.dynamodb.models.CelticUsers;
 import com.celticsengine.assetstore.models.requests.CreateAssetRequest;
-import com.celticsengine.assetstore.models.requests.CreateUserRequest;
 import com.celticsengine.assetstore.models.results.CreateAssetResult;
-import com.celticsengine.assetstore.models.results.CreateUserResult;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 

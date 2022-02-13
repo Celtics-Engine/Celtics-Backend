@@ -5,7 +5,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import java.util.Set;
 
 @DynamoDBTable(tableName = "celtic_assets")
-public class CelticAssets {
+public class CelticAsset {
 
    private String userId;
    private String assetId;
@@ -92,11 +92,11 @@ public class CelticAssets {
 
     @DynamoDBAttribute(attributeName = "compatible_engine_ver")
     public String getCompatibleEngineVer() {
-        return compatibleEngineVer;
+        return compatableEngineVer;
     }
 
     public void setCompatibleEngineVer(String compatibleEngineVer) {
-        this.compatibleEngineVer = compatibleEngineVer;
+        this.compatableEngineVer = compatibleEngineVer;
     }
 
     @DynamoDBAttribute(attributeName = "date_created")
