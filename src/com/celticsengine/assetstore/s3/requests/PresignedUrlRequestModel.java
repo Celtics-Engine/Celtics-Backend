@@ -36,60 +36,31 @@ public class PresignedUrlRequestModel {
     private final Logger log = LogManager.getLogger();
     private final HttpMethod httpMethod;
     private final Date expiration;
-    AmazonS3 s3Client;
+
     GeneratePresignedUrlRequest request;
 
 
-    public PresignedUrlRequestModel(AmazonS3 s3Client, String bucketName,
+    public PresignedUrlRequestModel(String bucketName,
                                     String objectKey, HttpMethod httpMethod, Date expiration) {
-        this.s3Client = s3Client;
+
         this.httpMethod = httpMethod;
         this.expiration = expiration;
-        this.s3Client = AmazonS3ClientBuilder.standard()
-                .withRegion(Regions.US_WEST_2)
-                .withCredentials(new ProfileCredentialsProvider())
-                .build();
         this.request = new GeneratePresignedUrlRequest(bucketName, objectKey);
     }
 
-    // TODO: still needs to be tested
-    private URL getPresignedRequestUrl() {
+    public URL getPresignedUrl() {
+        request.setMethod(httpMethod);
+        request.setExpiration(expiration);
         try {
-            switch (httpMethod) {
-                case GET:
-                    return s3Client.generatePresignedUrl(request
-                            .withMethod(GET)
-                            .withExpiration(this.expiration));
-                case POST:
-                    return s3Client.generatePresignedUrl(request
-                            .withMethod(POST)
-                            .withExpiration(this.expiration));
-                case PUT:
-                    return s3Client.generatePresignedUrl(request
-                            .withMethod(PUT)
-                            .withExpiration(this.expiration));
-                case DELETE:
-                    return s3Client.generatePresignedUrl(request
-                            .withMethod(DELETE)
-                            .withExpiration(this.expiration));
-                case HEAD:
-                    return s3Client.generatePresignedUrl(request
-                            .withMethod(HEAD)
-                            .withExpiration(this.expiration));
-                case PATCH:
-                    return s3Client.generatePresignedUrl(request
-                            .withMethod(PATCH)
-                            .withExpiration(this.expiration));
-            }
-
-            log.info("Presigned URL: " + request.toString());
-
-        } catch (SdkClientException e) {
-            log.error("Error creating presigned URL", e);
-            e.printStackTrace();
+            AmazonS3 s3 = AmazonS3ClientBuilder.standard()
+                    .withRegion(Regions.US_EAST_1)
+                    .withCredentials(new ProfileCredentialsProvider())
+                    .build();
+            return s3.generatePresignedUrl(request);
+        } catch (AmazonServiceException e) {
+            log.error(e.getErrorMessage());
+            throw new SdkClientException(e.getMessage(), e);
         }
-
-        return null;
     }
 
 }
