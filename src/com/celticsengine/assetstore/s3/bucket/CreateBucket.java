@@ -1,4 +1,4 @@
-package com.celticsengine.assetstore.s3;
+package com.celticsengine.assetstore.s3.bucket;
 
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;

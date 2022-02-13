@@ -1,4 +1,4 @@
-package com.celticsengine.assetstore.s3;
+package com.celticsengine.assetstore.s3.bucket;
 
 public class BucketWrite {
 
