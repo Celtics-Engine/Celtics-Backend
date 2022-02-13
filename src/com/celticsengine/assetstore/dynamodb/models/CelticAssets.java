@@ -13,9 +13,9 @@ public class CelticAssets {
    private String assetLocation;
    private String description;
    private Set<String> images;
-   private double fileSize;
-   private String downloads;
-   private String compatibleEngineVer;
+   private String fileSize;
+   private String bucketId;
+   private String compatableEngineVer;
    private String datePosted;
 
     @DynamoDBHashKey(attributeName = "user_id")
@@ -73,21 +73,21 @@ public class CelticAssets {
     }
 
     @DynamoDBAttribute(attributeName = "file_size")
-    public double getFileSize() {
+    public String getFileSize() {
         return fileSize;
     }
 
-    public void setFileSize(double fileSize) {
+    public void setFileSize(String fileSize) {
         this.fileSize = fileSize;
     }
 
-    @DynamoDBAttribute(attributeName = "downloads")
-    public String getDownloads() {
-        return downloads;
+    @DynamoDBAttribute(attributeName = "bucket_id")
+    public String getBucketId() {
+        return bucketId;
     }
 
-    public void setDownloads(String downloads) {
-        this.downloads = downloads;
+    public void setBucketId(String bucketId) {
+        this.bucketId = bucketId;
     }
 
     @DynamoDBAttribute(attributeName = "compatible_engine_ver")
