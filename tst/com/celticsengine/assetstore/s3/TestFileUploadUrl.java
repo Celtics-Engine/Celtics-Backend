@@ -3,19 +3,12 @@ package com.celticsengine.assetstore.s3;
 import com.amazonaws.HttpMethod;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.DeleteBucketRequest;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.joda.time.DateTime;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.net.URL;
-import java.time.Duration;
-import java.util.Date;
 
 public class TestFileUploadUrl {
 
@@ -28,13 +21,10 @@ public class TestFileUploadUrl {
 	 * making it a very fast operation
 	 *
 	 * A pre-signed URL gives you access to the object identified in the URL (so the build.gradle file in this case)
-	 *
-	 *
-	 *
 	 */
 	@Test
-	void generatePresignedUrl_retrievalOfBucketObject() {
-	String newFileName = "build.gradle";
+	void generatePresignedUrl() {
+		String newFileName = "build.gradle";
 
 		GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(
 				"nonexsistantbucketboy",

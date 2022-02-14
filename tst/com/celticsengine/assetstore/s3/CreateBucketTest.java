@@ -71,5 +71,8 @@ class CreateBucketTest {
         }
         return named_bucket;
     }
+
+    // http request to upload into bucket
+
 }
 
