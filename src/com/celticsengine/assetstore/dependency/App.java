@@ -5,6 +5,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.celticsengine.assetstore.activity.CreateUserActivity;
+import com.celticsengine.assetstore.activity.DeleteUserActivity;
 import com.celticsengine.assetstore.activity.UserLoginActivity;
 import com.celticsengine.assetstore.dynamodb.CelticUsersDao;
 import com.celticsengine.assetstore.dynamodb.providers.DynamoDbClientProvider;
@@ -22,6 +23,10 @@ public class App {
 
 	public UserLoginActivity provideUserLoginActivityProvider() {
 		return new UserLoginActivity(provideCelticUsersDao());
+	}
+
+	public DeleteUserActivity provideDeleteUserActivity() {
+		return new DeleteUserActivity(provideCelticUsersDao());
 	}
 
 
