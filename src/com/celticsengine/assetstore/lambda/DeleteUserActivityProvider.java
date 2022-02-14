@@ -1,6 +1,5 @@
 package com.celticsengine.assetstore.lambda;
 
-import com.amazonaws.DefaultRequest;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.celticsengine.assetstore.dependency.App;
