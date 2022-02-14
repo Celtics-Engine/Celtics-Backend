@@ -51,10 +51,9 @@ public class CelticUsersDao {
 		}
 	}
 
-	// probably doesn't work
 	public CelticUser getCelticUserScan(String id) {
 		ScanRequest scanRequest = new ScanRequest()
-				.withTableName("CelticUsers")
+				.withTableName("celtic_users")
 				.withFilterExpression("id = :id")
 				.withExpressionAttributeValues(new HashMap<String, AttributeValue>() {{
 					put(":id", new AttributeValue().withS(id));

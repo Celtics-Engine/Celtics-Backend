@@ -19,12 +19,10 @@ public class CreateUserActivity implements RequestHandler<CreateUserRequest, Use
 	private final Logger log = LogManager.getLogger();
 	private final CelticUsersDao celticUsersDao;
 
-
 	@Inject
 	public CreateUserActivity(CelticUsersDao celticUsersDao) {
 		this.celticUsersDao = celticUsersDao;
 	}
-
 
 	@Override
 	public UserLoginResult handleRequest(final CreateUserRequest createUserRequest, Context context) {
@@ -33,27 +31,27 @@ public class CreateUserActivity implements RequestHandler<CreateUserRequest, Use
 		try {
 			if (celticUsersDao.getCelticUserFromUserName(createUserRequest.getUsername()) != null) {
 				log.warn("User Already Exist");
-				throw new UserExistsException();
+				throw new UserExistsException("404: User Name Already Exist");
 			}
+
+			CelticUser celticUser = new CelticUser();
+			celticUser.setUserId(UUID.randomUUID().toString());
+			celticUser.setUsername(createUserRequest.getUsername());
+			celticUser.setPassword(createUserRequest.getPassword());
+			celticUser.setDateCreated(LocalDate.now().toString());
+
+			celticUsersDao.saveCelticUsers(celticUser);
+
+			return UserLoginResult.builder()
+					.withUserId(celticUser.getUserId())
+					.withUsername(celticUser.getUsername())
+					.withDateCreated(celticUser.getDateCreated())
+					.build(celticUser.getPassword());
+
 		} catch (UserExistsException e) {
 			log.error("Invalid Attribute Exception", e);
-			throw e;
 		}
 
-		CelticUser celticUser = new CelticUser();
-		celticUser.setUserId(UUID.randomUUID().toString());
-		celticUser.setUsername(createUserRequest.getUsername());
-		celticUser.setPassword(createUserRequest.getPassword());
-		celticUser.setDateCreated(LocalDate.now().toString());
-
-
-		celticUsersDao.saveCelticUsers(celticUser);
-
-
-		return UserLoginResult.builder()
-				.withUserId(celticUser.getUserId())
-				.withUsername(celticUser.getUsername())
-				.withDateCreated(celticUser.getDateCreated())
-				.build(celticUser.getPassword());
+		return null;
 	}
 }
