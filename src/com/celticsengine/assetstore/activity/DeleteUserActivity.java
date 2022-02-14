@@ -46,6 +46,7 @@ public class DeleteUserActivity implements RequestHandler<DeleteUserRequest, Use
 
             Key key = Keys.hmacShaKeyFor(celticUser.getPassword().getBytes(StandardCharsets.UTF_8));
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(deleteUserRequest.getJwt());
+            celticUsersDao.deleteCelticUser(celticUser);
 
             return UserLoginResult.builder().createFromCelticUser(celticUser).build(deleteUserRequest.getPassword());
 
