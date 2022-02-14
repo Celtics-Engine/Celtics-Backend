@@ -31,7 +31,7 @@ public class CreateUserActivity implements RequestHandler<CreateUserRequest, Use
 		try {
 			if (celticUsersDao.getCelticUserFromUserName(createUserRequest.getUsername()) != null) {
 				log.warn("User Already Exist");
-				throw new UserExistsException("404: User Name Already Exist");
+				throw new UserExistsException("409: User Name Already Exist");
 			}
 
 			CelticUser celticUser = new CelticUser();
