@@ -33,7 +33,7 @@ public class DeleteUserActivity implements RequestHandler<DeleteUserRequest, Use
         String userId = Jwts.parserBuilder().build().parseClaimsJwt(withoutSignature).getBody().getSubject();
 
         try {
-            CelticUser celticUser = celticUsersDao.getCelticUserScan(userId);
+            CelticUser celticUser = celticUsersDao.getCelticUserScan(userId); // FIXME: ResourceNotFoundException when running Lambda test
 
             if (celticUser == null) {
                 log.warn("Invalid User Id {}", userId);
