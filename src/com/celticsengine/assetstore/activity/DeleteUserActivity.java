@@ -35,13 +35,13 @@ public class DeleteUserActivity implements RequestHandler<DeleteUserRequest, Use
         try {
             CelticUser celticUser = celticUsersDao.getCelticUserScan(userId);
 
-            if (celticUser.getPassword() == null || celticUser.getPassword().equals(deleteUserRequest.getPassword())) {
-                throw new InvalidAttributeValueException("Invalid Password {}");
-            }
-
             if (celticUser == null) {
                 log.warn("Invalid User Id {}", userId);
                 throw new CelticUsersNotFoundException("The userId does not exsit");
+            }
+
+            if (celticUser.getPassword() == null || celticUser.getPassword().equals(deleteUserRequest.getPassword())) {
+                throw new InvalidAttributeValueException("Invalid Password {}");
             }
 
             Key key = Keys.hmacShaKeyFor(celticUser.getPassword().getBytes(StandardCharsets.UTF_8));
@@ -49,10 +49,9 @@ public class DeleteUserActivity implements RequestHandler<DeleteUserRequest, Use
 
             return UserLoginResult.builder().createFromCelticUser(celticUser).build(deleteUserRequest.getPassword());
 
+        } catch (CelticUsersNotFoundException e) {
+            log.error("Invalid Password {}", deleteUserRequest.getPassword());
         } catch (InvalidAttributeValueException e) {
-            log.error("Invalid User Id {}", userId);
-        }
-        catch (CelticUsersNotFoundException e) {
             log.error("Invalid User Id {}", userId);
         }
 
