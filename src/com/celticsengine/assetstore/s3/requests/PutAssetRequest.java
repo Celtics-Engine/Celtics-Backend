@@ -46,7 +46,7 @@ public class PutAssetRequest {
     }
 
 
-    public void uploadPresignedAsset(S3Presigner presigner, String bucketName, String keyName,
+    public static void uploadPresignedAsset(S3Presigner presigner, String bucketName, String keyName,
                                      String contentType, File file) {
         try {
             PutObjectRequest objectRequest = PutObjectRequest.builder()
@@ -85,7 +85,7 @@ public class PutAssetRequest {
     }
 
     // TODO: this is working but not uploading the assets from presigned urls also need it to be able to upload into a directory on the bucket if needed
-    public void multipartUpload(S3Client s3, String bucketName,  File... files) {
+    public static void multipartUpload(S3Client s3, String bucketName,  File... files) {
         try {
             int count = 0;
             Iterator<File> it = Stream.of(files).iterator();
@@ -141,31 +141,3 @@ public class PutAssetRequest {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-//    public static String uploadAssetPresigned(String filePath, String bucketName, String objectKey) throws IOException {
-//        byte[] bytes = convertFileTypeToByteArray(filePath);
-//        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-//                .bucket(bucketName)
-//                .key(objectKey)
-//                .build();
-//
-//        PutObjectPresignRequest presignRequest = PutObjectPresignRequest.builder()
-//                .signatureDuration(Duration.ofMinutes(10))
-//                .putObjectRequest(putObjectRequest)
-//                .build();
-//
-//        S3Presigner presigner = S3Presigner.create();
-//        PresignedPutObjectRequest presignedRequest = presigner.presignPutObject(presignRequest);
-//
-//        return presignedRequest.url().toString();
-//    }

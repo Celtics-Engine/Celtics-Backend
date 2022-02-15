@@ -1,5 +1,6 @@
 package com.celticsengine.assetstore.s3.requests;
 
+import com.celticsengine.assetstore.exception.PresignedGetObjectRequestNotFoundException;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
@@ -15,8 +16,8 @@ import java.time.Duration;
 
 public class GetAssetRequest {
 
-    public static void getPresignedAsset(S3Presigner presigner, String bucketName, String keyName ) {
-
+    public static PresignedGetObjectRequest getPresignedAsset(S3Presigner presigner,
+                                                              String bucketName, String keyName ) {
         try {
             GetObjectRequest getObjectRequest =
                     GetObjectRequest.builder()
@@ -30,23 +31,45 @@ public class GetAssetRequest {
                     .build();
 
             // Generate the presigned request
-            PresignedGetObjectRequest presignedGetObjectRequest =
-                    presigner.presignGetObject(getObjectPresignRequest);
+            return presigner.presignGetObject(getObjectPresignRequest);
 
-            // Log the presigned URL
-            System.out.println("Presigned URL: " + presignedGetObjectRequest.url());
+        } catch (S3Exception | PresignedGetObjectRequestNotFoundException e) {
+            System.out.println("Error occurred while presigning the request: " + e.getMessage());
+            e.getStackTrace();
+        }
 
-            HttpURLConnection connection = (HttpURLConnection) presignedGetObjectRequest.url().openConnection();
-            presignedGetObjectRequest.httpRequest().headers().forEach((header, values) -> {
+        return null;
+    }
+
+
+    public static PresignedGetObjectRequest getPresignedAssetWithHeaders(S3Presigner presigner,
+                                                                String bucketName, String keyName) {
+
+        try {
+            GetObjectRequest getObjectRequest =
+                    GetObjectRequest.builder()
+                            .bucket(bucketName)
+                            .key(keyName)
+                            .build();
+
+            GetObjectPresignRequest getObjectPresignRequest =  GetObjectPresignRequest.builder()
+                    .signatureDuration(Duration.ofMinutes(10))
+                    .getObjectRequest(getObjectRequest)
+                    .build();
+
+            PresignedGetObjectRequest request = presigner.presignGetObject(getObjectPresignRequest);
+
+            HttpURLConnection connection = (HttpURLConnection) request.url().openConnection();
+            request.httpRequest().headers().forEach((header, values) -> {
                 values.forEach(value -> {
                     connection.addRequestProperty(header, value);
                 });
             });
 
             // Send any request payload that the service needs (not needed when isBrowserExecutable is true)
-            if (presignedGetObjectRequest.signedPayload().isPresent()) {
+            if (request.signedPayload().isPresent()) {
                 connection.setDoOutput(true);
-                try (InputStream signedPayload = presignedGetObjectRequest.signedPayload().get().asInputStream();
+                try (InputStream signedPayload = request.signedPayload().get().asInputStream();
                      OutputStream httpOutputStream = connection.getOutputStream()) {
                     IoUtils.copy(signedPayload, httpOutputStream);
                 } catch (IOException e) {
@@ -54,15 +77,14 @@ public class GetAssetRequest {
                 }
             }
 
-            // Download the result of executing the request
-            try (InputStream content = connection.getInputStream()) {
-                System.out.println("Service returned response: ");
-                IoUtils.copy(content, System.out);
-            }
-
-        } catch (S3Exception | IOException e) {
+        } catch (S3Exception | PresignedGetObjectRequestNotFoundException | IOException e) {
+            System.out.println("Error occurred while presigning the request: " + e.getMessage());
             e.getStackTrace();
         }
+
+        return null;
     }
+
+
 
 }

@@ -11,7 +11,7 @@ import software.amazon.awssdk.services.s3.model.ListObjectsResponse;
 import java.util.List;
 
 public class BucketAccess {
-    final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.DEFAULT_REGION).build();
+    final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.US_WEST_2).build();
 
     public static ListObjectsResponse listObjects(String bucketName) {
         S3Client client = S3Client.create();
