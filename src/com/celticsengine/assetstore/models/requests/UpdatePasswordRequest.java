@@ -16,7 +16,7 @@ public class UpdatePasswordRequest {
 
     public UpdatePasswordRequest(String jwt, String password, String newPassword) {
         this.jwt = jwt;
-        this.password = Base64.getEncoder().encodeToString(DigestUtils.sha512(password));
+        this.password = password;
         this.newPassword = Base64.getEncoder().encodeToString(DigestUtils.sha512(newPassword));
     }
 
@@ -49,11 +49,11 @@ public class UpdatePasswordRequest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UpdatePasswordRequest that = (UpdatePasswordRequest) o;
-        return getJwt().equals(that.getJwt()) && getPassword().equals(that.getPassword());
+        return getJwt().equals(that.getJwt()) && getPassword().equals(that.getPassword()) && getNewPassword().equals(that.getNewPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getJwt(), getPassword());
+        return Objects.hash(getJwt(), getPassword(), getNewPassword());
     }
 }

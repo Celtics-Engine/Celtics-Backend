@@ -17,7 +17,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 
 public class UpdatePasswordActivity implements RequestHandler<UpdatePasswordRequest, UserLoginResult> {
-
     private final Logger log = LogManager.getLogger();
     private final CelticUsersDao celticUsersDao;
 
@@ -34,15 +33,16 @@ public class UpdatePasswordActivity implements RequestHandler<UpdatePasswordRequ
         String userId = Jwts.parserBuilder().build().parseClaimsJwt(withoutSignature).getBody().getSubject();
 
         try {
-            CelticUser celticUser = celticUsersDao.getCelticUserScan(userId);
+            CelticUser celticUser = celticUsersDao.getUserById(userId);
 
             if (celticUser == null) {
                 log.warn("Invalid User Id {}", userId);
                 throw new CelticUsersNotFoundException("The userId does not exist");
             }
 
-            if (celticUser.getPassword() == null || celticUser.getPassword().equals(updatePasswordRequest.getPassword())) {
-                throw new InvalidAttributeValueException("Invalid Password {}");
+            if (celticUser.getPassword() == null || !celticUser.getPassword().equals(updatePasswordRequest.getPassword())) {
+                log.warn("Invalid Password {}", celticUser.getPassword());
+                throw new InvalidAttributeValueException("Invalid Password");
             }
 
             Key key = Keys.hmacShaKeyFor(celticUser.getPassword().getBytes(StandardCharsets.UTF_8));
@@ -51,12 +51,12 @@ public class UpdatePasswordActivity implements RequestHandler<UpdatePasswordRequ
             celticUser.setPassword(updatePasswordRequest.getNewPassword());
             celticUsersDao.saveCelticUsers(celticUser);
 
-            return UserLoginResult.builder().createFromCelticUser(celticUser).build(updatePasswordRequest.getPassword());
+            return UserLoginResult.builder().createFromCelticUser(celticUser).build(updatePasswordRequest.getNewPassword());
 
-        } catch (CelticUsersNotFoundException e) {
-            log.error("Invalid Password {}", updatePasswordRequest.getPassword());
         } catch (InvalidAttributeValueException e) {
             log.error("Invalid User Id {}", userId);
+        } catch (CelticUsersNotFoundException e) {
+            log.error("Invalid Password {}", updatePasswordRequest.getPassword());
         }
 
         return null;
