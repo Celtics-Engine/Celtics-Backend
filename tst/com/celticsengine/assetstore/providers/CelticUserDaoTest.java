@@ -39,15 +39,15 @@ public class CelticUserDaoTest {
 
     }
 
-    @Test
-    void scanDbForAllUserNames() {
-        List<CelticUser> users = mapper.scan(CelticUser.class,
-                new DynamoDBScanExpression()
-                        .withFilterExpression("username = :username")
-                        .withExpressionAttributeValues(names));
-
-        users.forEach(user -> System.out.println(user.getUsername()));
-    }
+//    @Test
+//    void scanDbForAllUserNames() {
+//        List<CelticUser> users = mapper.scan(CelticUser.class,
+//                new DynamoDBScanExpression()
+//                        .withFilterExpression("username = :username")
+//                        .withExpressionAttributeValues(names));
+//
+//        users.forEach(user -> System.out.println(user.getUsername()));
+//    }
 
 }
 

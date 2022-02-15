@@ -1,4 +1,4 @@
-package com.celticsengine.assetstore.s3;
+package com.celticsengine.assetstore.s3.bucket;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.regions.Regions;
@@ -71,5 +71,8 @@ class CreateBucketTest {
         }
         return named_bucket;
     }
+
+    // http request to upload into bucket
+
 }
 
