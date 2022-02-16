@@ -11,7 +11,6 @@ public class UserLoginRequest {
 
 
 	public UserLoginRequest() {
-
 	}
 
 	public UserLoginRequest(String username, String password) {
