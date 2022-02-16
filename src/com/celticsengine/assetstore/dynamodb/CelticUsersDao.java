@@ -1,16 +1,17 @@
 package com.celticsengine.assetstore.dynamodb;
 
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.celticsengine.assetstore.dynamodb.models.CelticUser;
 import com.celticsengine.assetstore.exception.CelticUsersNotFoundException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -52,22 +53,22 @@ public class CelticUsersDao {
 	}
 
 	// probably doesn't work
-	public CelticUser getCelticUserScan(String id) {
-		ScanRequest scanRequest = new ScanRequest()
-				.withTableName("CelticUsers")
-				.withFilterExpression("id = :id")
-				.withExpressionAttributeValues(new HashMap<String, AttributeValue>() {{
-					put(":id", new AttributeValue().withS(id));
-				}});
-
-		ScanResult scanResult = client.scan(scanRequest);
-
-		if (scanResult.getCount() == 0) {
-			throw new CelticUsersNotFoundException(id);
-		}
-
-		return dynamoDbMapper.marshallIntoObject(CelticUser.class, scanResult.getItems().get(0));
-	}
+//	public CelticUser getCelticUserScan(String id) {
+//		ScanRequest scanRequest = new ScanRequest()
+//				.withTableName("CelticUsers")
+//				.withFilterExpression("id = :id")
+//				.withExpressionAttributeValues(new HashMap<String, AttributeValue>() {{
+//					put(":id", new AttributeValue().withS(id));
+//				}});
+//
+//		ScanResult scanResult = client.scan(scanRequest);
+//
+//		if (scanResult.getCount() == 0) {
+//			throw new CelticUsersNotFoundException(id);
+//		}
+//
+//		return dynamoDbMapper.marshallIntoObject(CelticUser.class, scanResult.getItems().get(0));
+//	}
 
 
 	public CelticUser getCelticUsers(String asin) {
@@ -76,6 +77,26 @@ public class CelticUsersDao {
 			throw new CelticUsersNotFoundException("Could not find playlist with id " + asin);
 		}
 		return celticUser;
+	}
+
+	public List<String> getAllCelticUserIdsScan() {
+		Map<String, AttributeValue> tableAttributeMap = new HashMap<String, AttributeValue>();
+		tableAttributeMap.put(":id", new AttributeValue());
+
+		ScanRequest scanRequest = new ScanRequest()
+				.withTableName("celtic_users")
+				.withProjectionExpression("user_id")
+				.withExpressionAttributeValues(tableAttributeMap);
+
+
+		ScanResult result = client.scan(scanRequest);
+		List<String> listOfIds = new ArrayList<>();
+
+		for (Map<String, AttributeValue> item : result.getItems()) {
+			listOfIds.add(item.get("id").toString());
+		}
+
+		return listOfIds;
 	}
 
 	public void saveCelticUsers(CelticUser celticUser) {
