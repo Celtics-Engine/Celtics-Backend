@@ -48,11 +48,14 @@ public class DeleteUserActivity implements RequestHandler<DeleteUserRequest, Del
                 throw new InvalidAttributeValueException("Invalid Password");
             }
 
+            Key key = Keys.hmacShaKeyFor(deleteUserRequest.getPassword().getBytes(StandardCharsets.UTF_8));
+            String jwtSigned = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(deleteUserRequest.getJwt()).toString();
+
             celticUsersDao.deleteCelticUser(celticUser);
 
             return DeleteUserResult.builder()
                     .withUserWasDeleted(true)
-                    .withJwt(deleteUserRequest.getJwt())
+                    .withJwt(jwtSigned)
                     .withDateDeleted(LocalDate.now().toString())
                     .build();
 
