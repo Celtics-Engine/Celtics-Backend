@@ -57,7 +57,7 @@ public class DeleteUserActivity implements RequestHandler<DeleteUserRequest, Del
                     .withUserWasDeleted(true)
                     .withJwt(jwtSigned)
                     .withDateDeleted(LocalDate.now().toString())
-                    .build();
+                    .build(deleteUserRequest.getPassword());
 
         } catch (CelticUsersNotFoundException e) {
             log.error("Invalid User Id {}", e.getMessage());

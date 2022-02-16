@@ -8,10 +8,14 @@ public class DeleteUserResult {
     public DeleteUserResult() {
     }
 
-    public DeleteUserResult(Builder builder) {
-        this.userWasDeleted = builder.userWasDeleted;
-        this.jwt = builder.jwt;
-        this.dateDeleted = builder.dateDeleted;
+    private DeleteUserResult (boolean userWasDeleted) {
+        this.userWasDeleted = userWasDeleted;
+    }
+
+    private DeleteUserResult(boolean userWasDeleted, String jwt, String dateDeleted) {
+        this.userWasDeleted = userWasDeleted;
+        this.jwt = jwt;
+        this.dateDeleted = dateDeleted;
     }
 
     public boolean getUserWasDeleted() {
@@ -57,13 +61,17 @@ public class DeleteUserResult {
             return this;
         }
 
-        public Builder withDateDeleted(String  dateDeleted) {
+        public Builder withDateDeleted(String dateDeleted) {
             this.dateDeleted = dateDeleted;
             return this;
         }
 
-        public DeleteUserResult build() {
-            return new DeleteUserResult(this);
+        public  DeleteUserResult build() {
+            return new DeleteUserResult(userWasDeleted);
+        }
+
+        public DeleteUserResult build(String passwordKey) {
+            return new DeleteUserResult(userWasDeleted, jwt, dateDeleted);
         }
     }
 }
