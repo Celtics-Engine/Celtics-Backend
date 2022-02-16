@@ -41,7 +41,7 @@ public class UpdatePasswordRequest {
     }
 
     public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
+        this.newPassword = Base64.getEncoder().encodeToString(DigestUtils.sha512(newPassword));
     }
 
     @Override

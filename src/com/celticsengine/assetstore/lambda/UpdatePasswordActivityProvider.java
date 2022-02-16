@@ -4,14 +4,14 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.celticsengine.assetstore.dependency.App;
 import com.celticsengine.assetstore.models.requests.UpdatePasswordRequest;
-import com.celticsengine.assetstore.models.results.UserLoginResult;
+import com.celticsengine.assetstore.models.results.UpdatePasswordResult;
 
-public class UpdatePasswordActivityProvider implements RequestHandler<UpdatePasswordRequest, UserLoginResult> {
+public class UpdatePasswordActivityProvider implements RequestHandler<UpdatePasswordRequest, UpdatePasswordResult> {
 
     private static App app;
 
     @Override
-    public UserLoginResult handleRequest(UpdatePasswordRequest updatePasswordRequest, Context context) {
+    public UpdatePasswordResult handleRequest(UpdatePasswordRequest updatePasswordRequest, Context context) {
         return getApp().provideUpdatePasswordActivityProvider().handleRequest(updatePasswordRequest, context);
     }
 

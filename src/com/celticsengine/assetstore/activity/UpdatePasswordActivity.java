@@ -7,6 +7,7 @@ import com.celticsengine.assetstore.dynamodb.models.CelticUser;
 import com.celticsengine.assetstore.exception.CelticUsersNotFoundException;
 import com.celticsengine.assetstore.exception.InvalidAttributeValueException;
 import com.celticsengine.assetstore.models.requests.UpdatePasswordRequest;
+import com.celticsengine.assetstore.models.results.UpdatePasswordResult;
 import com.celticsengine.assetstore.models.results.UserLoginResult;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -15,8 +16,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.time.LocalDate;
 
-public class UpdatePasswordActivity implements RequestHandler<UpdatePasswordRequest, UserLoginResult> {
+public class UpdatePasswordActivity implements RequestHandler<UpdatePasswordRequest, UpdatePasswordResult> {
     private final Logger log = LogManager.getLogger();
     private final CelticUsersDao celticUsersDao;
 
@@ -25,7 +27,7 @@ public class UpdatePasswordActivity implements RequestHandler<UpdatePasswordRequ
     }
 
     @Override
-    public UserLoginResult handleRequest(UpdatePasswordRequest updatePasswordRequest , Context context) {
+    public UpdatePasswordResult handleRequest(UpdatePasswordRequest updatePasswordRequest , Context context) {
         log.info("Requested UpdatePasswordRequest {}", updatePasswordRequest);
 
         int i = updatePasswordRequest.getJwt().lastIndexOf('.');
@@ -51,7 +53,11 @@ public class UpdatePasswordActivity implements RequestHandler<UpdatePasswordRequ
             celticUser.setPassword(updatePasswordRequest.getNewPassword());
             celticUsersDao.saveCelticUsers(celticUser);
 
-            return UserLoginResult.builder().createFromCelticUser(celticUser).build(updatePasswordRequest.getNewPassword());
+            return UpdatePasswordResult.builder().
+                    withPasswordUpdated(true)
+                    .withCelticUser(celticUser)
+                    .withDateUpdated(LocalDate.now().toString())
+                    .build(updatePasswordRequest.getNewPassword());
 
         } catch (InvalidAttributeValueException e) {
             log.error("Invalid User Id {}", userId);
@@ -59,6 +65,6 @@ public class UpdatePasswordActivity implements RequestHandler<UpdatePasswordRequ
             log.error("Invalid Password {}", updatePasswordRequest.getPassword());
         }
 
-        return null;
+        return UpdatePasswordResult.builder().withPasswordUpdated(false).build();
     }
 }
