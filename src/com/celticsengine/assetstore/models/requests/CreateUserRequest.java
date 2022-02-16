@@ -6,7 +6,6 @@ import java.util.Base64;
 import java.util.Objects;
 
 public class CreateUserRequest {
-
 	private String username;
 	private String password;
 

@@ -7,6 +7,7 @@ import com.celticsengine.assetstore.dynamodb.models.CelticUser;
 import com.celticsengine.assetstore.exception.CelticUsersNotFoundException;
 import com.celticsengine.assetstore.exception.InvalidAttributeValueException;
 import com.celticsengine.assetstore.models.requests.DeleteUserRequest;
+import com.celticsengine.assetstore.models.results.DeleteUserResult;
 import com.celticsengine.assetstore.models.results.UserLoginResult;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -15,8 +16,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.time.LocalDate;
+import java.util.Date;
 
-public class DeleteUserActivity implements RequestHandler<DeleteUserRequest, UserLoginResult> {
+public class DeleteUserActivity implements RequestHandler<DeleteUserRequest, DeleteUserResult> {
     private final Logger log = LogManager.getLogger();
     private final CelticUsersDao celticUsersDao;
 
@@ -25,7 +28,7 @@ public class DeleteUserActivity implements RequestHandler<DeleteUserRequest, Use
     }
 
     @Override
-    public UserLoginResult handleRequest(DeleteUserRequest deleteUserRequest, Context context) {
+    public DeleteUserResult handleRequest(DeleteUserRequest deleteUserRequest, Context context) {
         log.info("Requested DeleteUserRequest {}", deleteUserRequest);
 
         int i = deleteUserRequest.getJwt().lastIndexOf('.');
@@ -33,29 +36,32 @@ public class DeleteUserActivity implements RequestHandler<DeleteUserRequest, Use
         String userId = Jwts.parserBuilder().build().parseClaimsJwt(withoutSignature).getBody().getSubject();
 
         try {
-            CelticUser celticUser = celticUsersDao.getCelticUserScan(userId); // FIXME: ResourceNotFoundException when running Lambda test
+            CelticUser celticUser = celticUsersDao.load(userId);
 
             if (celticUser == null) {
                 log.warn("Invalid User Id {}", userId);
-                throw new CelticUsersNotFoundException("The userId does not exsit");
+                throw new CelticUsersNotFoundException("The userId does not exist");
             }
 
-            if (celticUser.getPassword() == null || celticUser.getPassword().equals(deleteUserRequest.getPassword())) {
-                throw new InvalidAttributeValueException("Invalid Password {}");
+            if (celticUser.getPassword() == null || !celticUser.getPassword().equals(deleteUserRequest.getPassword())) {
+                log.warn("Invalid Password {}", deleteUserRequest.getPassword());
+                throw new InvalidAttributeValueException("Invalid Password");
             }
 
-            Key key = Keys.hmacShaKeyFor(celticUser.getPassword().getBytes(StandardCharsets.UTF_8));
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(deleteUserRequest.getJwt());
             celticUsersDao.deleteCelticUser(celticUser);
 
-            return UserLoginResult.builder().createFromCelticUser(celticUser).build(deleteUserRequest.getPassword());
+            return DeleteUserResult.builder()
+                    .withUserWasDeleted(true)
+                    .withJwt(deleteUserRequest.getJwt())
+                    .withDateDeleted(LocalDate.now().toString())
+                    .build();
 
         } catch (CelticUsersNotFoundException e) {
-            log.error("Invalid Password {}", deleteUserRequest.getPassword());
+            log.error("Invalid User Id {}", e.getMessage());
         } catch (InvalidAttributeValueException e) {
-            log.error("Invalid User Id {}", userId);
+            log.error("Invalid Password {}", e.getMessage());
         }
 
-        return null;
+        return DeleteUserResult.builder().withUserWasDeleted(false).build();
     }
 }

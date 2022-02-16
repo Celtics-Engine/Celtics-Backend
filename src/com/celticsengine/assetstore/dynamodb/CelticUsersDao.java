@@ -1,8 +1,6 @@
 package com.celticsengine.assetstore.dynamodb;
 
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
@@ -26,6 +24,10 @@ public class CelticUsersDao {
 
 	public void load(CelticUser celticUser) {
 		this.dynamoDbMapper.load(celticUser);
+	}
+
+	public CelticUser load(String userId) {
+		return this.dynamoDbMapper.load(CelticUser.class, userId);
 	}
 
 	public CelticUser getCelticUserFromUserName(String username) {

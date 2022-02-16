@@ -4,9 +4,9 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.celticsengine.assetstore.dependency.App;
 import com.celticsengine.assetstore.models.requests.DeleteUserRequest;
-import com.celticsengine.assetstore.models.results.UserLoginResult;
+import com.celticsengine.assetstore.models.results.DeleteUserResult;
 
-public class DeleteUserActivityProvider implements RequestHandler<DeleteUserRequest, UserLoginResult> {
+public class DeleteUserActivityProvider implements RequestHandler<DeleteUserRequest, DeleteUserResult> {
 
     private static App app;
 
@@ -14,7 +14,7 @@ public class DeleteUserActivityProvider implements RequestHandler<DeleteUserRequ
     }
 
     @Override
-    public UserLoginResult handleRequest(DeleteUserRequest deleteUserRequest, Context context) {
+    public DeleteUserResult handleRequest(DeleteUserRequest deleteUserRequest, Context context) {
         return getApp().provideDeleteUserActivity().handleRequest(deleteUserRequest, context);
     }
 
