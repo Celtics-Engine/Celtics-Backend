@@ -1,30 +1,28 @@
 package com.celticsengine.assetstore.models.requests;
 
-import org.checkerframework.checker.units.qual.C;
-
 import java.util.Objects;
 import java.util.Set;
 
 public class CreateAssetRequest {
 
     private String jwt;
-    private String name;
-    private String descripsion;
+    private String assetName;
+    private String description;
     private Set<String> image;
-    private String compatableEngineVer;
+    private String compatibleEngineVer;
 
-    public CreateAssetRequest(String jwt, String name, String descripsion,
-                              Set<String> image, String compatableEngineVer) {
+    public CreateAssetRequest(String jwt, String assetName, String description,
+                              Set<String> image, String compatibleEngineVer) {
         this.jwt = jwt;
-        this.name = name;
-        this.descripsion = descripsion;
+        this.assetName = assetName;
+        this.description = description;
         this.image = image;
-        this.compatableEngineVer = compatableEngineVer;
+        this.compatibleEngineVer = compatibleEngineVer;
     }
     public CreateAssetRequest(){}
 
-    public CreateAssetRequest(Builder builder) {this(builder.jwt, builder.name,
-            builder.descripsion, builder.image, builder.compatableEngineVer);}
+    public CreateAssetRequest(Builder builder) {this(builder.jwt, builder.assetName,
+            builder.description, builder.image, builder.compatibleEngineVer);}
 
     public String getJwt() {
         return jwt;
@@ -34,20 +32,20 @@ public class CreateAssetRequest {
         this.jwt = jwt;
     }
 
-    public String getName() {
-        return name;
+    public String getAssetName() {
+        return assetName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAssetName(String assetName) {
+        this.assetName = assetName;
     }
 
-    public String getDescripsion() {
-        return descripsion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescripsion(String descripsion) {
-        this.descripsion = descripsion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Set<String> getImage() {
@@ -58,12 +56,12 @@ public class CreateAssetRequest {
         this.image = image;
     }
 
-    public String getCompatableEngineVer() {
-        return compatableEngineVer;
+    public String getCompatibleEngineVer() {
+        return compatibleEngineVer;
     }
 
-    public void setCompatableEngineVer(String compatableEngineVer) {
-        this.compatableEngineVer = compatableEngineVer;
+    public void setCompatibleEngineVer(String compatibleEngineVer) {
+        this.compatibleEngineVer = compatibleEngineVer;
     }
 
     @Override
@@ -71,25 +69,25 @@ public class CreateAssetRequest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CreateAssetRequest that = (CreateAssetRequest) o;
-        return getJwt().equals(that.getJwt()) && Objects.equals(getName(),
-                that.getName()) && Objects.equals(getDescripsion(),
-                that.getDescripsion()) && Objects.equals(getImage(),
-                that.getImage()) && Objects.equals(getCompatableEngineVer(),
-                that.getCompatableEngineVer());
+        return getJwt().equals(that.getJwt()) && Objects.equals(getAssetName(),
+                that.getAssetName()) && Objects.equals(getDescription(),
+                that.getDescription()) && Objects.equals(getImage(),
+                that.getImage()) && Objects.equals(getCompatibleEngineVer(),
+                that.getCompatibleEngineVer());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getJwt(), getName(), getDescripsion(), getImage(),
-                                                  getCompatableEngineVer());
+        return Objects.hash(getJwt(), getAssetName(), getDescription(), getImage(),
+                                                  getCompatibleEngineVer());
     }
 
     public static final class Builder {
         private String jwt;
-        private String name;
-        private String descripsion;
+        private String assetName;
+        private String description;
         private Set<String> image;
-        private String compatableEngineVer;
+        private String compatibleEngineVer;
 
         private Builder() {}
 
@@ -98,13 +96,13 @@ public class CreateAssetRequest {
             return this;
         }
 
-        public Builder withName(String nameToUse) {
-            this.name = nameToUse;
+        public Builder withName(String assetNameToUse) {
+            this.assetName = assetNameToUse;
             return this;
         }
 
-        public Builder withDescripsion(String descripsionToUse) {
-            this.descripsion = descripsionToUse;
+        public Builder withDescription(String descriptionToUse) {
+            this.description = descriptionToUse;
             return this;
         }
 
@@ -113,8 +111,8 @@ public class CreateAssetRequest {
             return this;
         }
 
-        public Builder withCompatableEngineVer(String compatableEngineVerToUse) {
-            this.compatableEngineVer = compatableEngineVerToUse;
+        public Builder withCompatibleEngineVer(String compatibleEngineVerToUse) {
+            this.compatibleEngineVer = compatibleEngineVerToUse;
             return this;
         }
 

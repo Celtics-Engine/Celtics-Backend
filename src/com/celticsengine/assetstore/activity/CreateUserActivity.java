@@ -4,7 +4,6 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.celticsengine.assetstore.dynamodb.CelticUsersDao;
 import com.celticsengine.assetstore.dynamodb.models.CelticUser;
-import com.celticsengine.assetstore.exception.InvalidAttributeException;
 import com.celticsengine.assetstore.exception.UserExistsException;
 import com.celticsengine.assetstore.models.requests.CreateUserRequest;
 import com.celticsengine.assetstore.models.results.UserLoginResult;

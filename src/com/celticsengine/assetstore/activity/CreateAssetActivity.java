@@ -56,14 +56,14 @@ public class CreateAssetActivity implements RequestHandler<CreateAssetRequest, C
 
                    Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(createAssetRequest.getJwt());
             } else {
-                throw new CelticUsersNotFoundException("The userId does not exsit");
+                throw new CelticUsersNotFoundException("The userId does not exist");
             }
 
 
             CelticAsset celticAsset = new CelticAsset();
             celticAsset.setUserId(userId);
             celticAsset.setAssetId(UUID.randomUUID().toString());
-            celticAsset.setName(createAssetRequest.getName());
+            celticAsset.setAssetName(createAssetRequest.getAssetName());
             celticAsset.setAssetLocation(celticAsset.getAssetLocation());
             celticAsset.setDescription(celticAsset.getDescription());
             celticAsset.setImages(celticAsset.getImages());
@@ -77,13 +77,13 @@ public class CreateAssetActivity implements RequestHandler<CreateAssetRequest, C
             return CreateAssetResult.builder()
                     .withUserId(celticAsset.getUserId())
                     .withAssetId(celticAsset.getAssetId())
-                    .withName(celticAsset.getName())
+                    .withName(celticAsset.getAssetName())
                     .withAssetLocation(celticAsset.getAssetLocation())
-                    .withDiscription(celticAsset.getDescription())
+                    .withDescription(celticAsset.getDescription())
                     .withImages(celticAsset.getImages())
                     .withFileSize(celticAsset.getFileSize())
                     .withBucketId(celticAsset.getBucketId())
-                    .withCompatableEngineVer(celticAsset.getCompatibleEngineVer())
+                    .withCompatibleEngineVer(celticAsset.getCompatibleEngineVer())
                     .withDatePosted(celticAsset.getDatePosted())
                     .build();
 

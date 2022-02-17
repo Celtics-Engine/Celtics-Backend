@@ -10,7 +10,7 @@ import dagger.Provides;
 import javax.inject.Singleton;
 
 @Module
-public class Mappermodule {
+public class MapperModule {
 
 	@Singleton
 	@Provides

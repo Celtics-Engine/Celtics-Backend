@@ -10,13 +10,13 @@ import com.celticsengine.assetstore.dynamodb.models.CelticAsset;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO:
+
 public class CelticsAssetsDao {
     AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().build();
     DynamoDBMapper mapper;
 
     public CelticsAssetsDao() {
-         mapper = new DynamoDBMapper(client);
+        mapper = new DynamoDBMapper(client);
     }
 
     public void save(CelticAsset asset) {
@@ -34,6 +34,7 @@ public class CelticsAssetsDao {
     public CelticAsset getUserId(String user_id) {
         return mapper.load(CelticAsset.class, user_id);
     }
+
     public void update(CelticAsset asset) {
         mapper.save(asset);
     }
