@@ -53,7 +53,6 @@ public class CelticUsersDao {
 		}
 	}
 
-	// probably doesn't work
 	public CelticUser getCelticUserScan(String id) {
 		ScanRequest scanRequest = new ScanRequest()
 				.withTableName("celtic_users")
