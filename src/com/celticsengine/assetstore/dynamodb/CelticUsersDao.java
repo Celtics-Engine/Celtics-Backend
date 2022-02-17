@@ -28,6 +28,10 @@ public class CelticUsersDao {
 		this.dynamoDbMapper.load(celticUser);
 	}
 
+	public CelticUser getUserById(String userId) {
+		return dynamoDbMapper.load(CelticUser.class, userId);
+	}
+
 	public CelticUser getCelticUserFromUserName(String username) {
 
 		Map<String, AttributeValue> names = new HashMap<>();
@@ -54,8 +58,8 @@ public class CelticUsersDao {
 	// probably doesn't work
 	public CelticUser getCelticUserScan(String id) {
 		ScanRequest scanRequest = new ScanRequest()
-				.withTableName("CelticUsers")
-				.withFilterExpression("id = :id")
+				.withTableName("celtic_users")
+				.withFilterExpression("user_id = :id")
 				.withExpressionAttributeValues(new HashMap<String, AttributeValue>() {{
 					put(":id", new AttributeValue().withS(id));
 				}});

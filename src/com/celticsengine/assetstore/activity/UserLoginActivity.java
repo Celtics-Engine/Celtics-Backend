@@ -27,13 +27,12 @@ public class UserLoginActivity implements RequestHandler<UserLoginRequest, UserL
 			CelticUser celticUser = celticUsersDao.getCelticUserFromUserName(userLoginRequest.getUsername());
 
 			if (celticUser == null) {
-				log.warn(celticUser);
+				log.warn("Invalid Username", userLoginRequest);
 				throw new CelticUsersNotFoundException("Invalid Username");
 			}
 
 			if (userLoginRequest.getPassword() == null || !celticUser.getPassword().equals(userLoginRequest.getPassword())) {
 				log.warn("Invalid Password");
-				celticUser = null;
 				throw new InvalidAttributeValueException("Invalid Password");
 			}
 

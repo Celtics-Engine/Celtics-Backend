@@ -8,11 +8,9 @@ import com.celticsengine.assetstore.models.results.UserLoginResult;
 
 public class CreateUserActivityProvider implements RequestHandler<CreateUserRequest, UserLoginResult> {
 
-
 	private static App app;
 
 	public CreateUserActivityProvider() {
-
 	}
 
 	@Override

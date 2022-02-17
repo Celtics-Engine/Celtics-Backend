@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.celticsengine.assetstore.activity.CreateAssetActivity;
 import com.celticsengine.assetstore.activity.CreateUserActivity;
+import com.celticsengine.assetstore.activity.UpdatePasswordActivity;
 import com.celticsengine.assetstore.activity.UserLoginActivity;
 import com.celticsengine.assetstore.dynamodb.CelticAssetsDao;
 import com.celticsengine.assetstore.dynamodb.CelticUsersDao;
@@ -18,15 +19,20 @@ public class App {
 	private DynamoDBMapper dynamoDBMapper;
 	private AmazonDynamoDB amazonDynamoDB;
 
-    public CreateUserActivity provideCreateUserActivity() {
+	public CreateAssetActivity provideCreateAssetActivity() {
+		return new CreateAssetActivity(provideCelticAssetsDao(), provideCelticUsersDao());
+	}
+
+	public CreateUserActivity provideCreateUserActivity() {
         return new CreateUserActivity(provideCelticUsersDao());
-    }
-    public CreateAssetActivity provideCreateAssetActivity() {
-        return new CreateAssetActivity(provideCelticAssetsDao(), provideCelticUsersDao());
     }
 
 	public UserLoginActivity provideUserLoginActivityProvider() {
 		return new UserLoginActivity(provideCelticUsersDao());
+	}
+
+	public UpdatePasswordActivity provideUpdatePasswordActivityProvider() {
+		return new UpdatePasswordActivity(provideCelticUsersDao());
 	}
 
 
