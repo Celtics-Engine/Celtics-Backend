@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.celticsengine.assetstore.activity.CreateAssetActivity;
 import com.celticsengine.assetstore.activity.CreateUserActivity;
 import com.celticsengine.assetstore.activity.UpdatePasswordActivity;
+import com.celticsengine.assetstore.activity.DeleteUserActivity;
 import com.celticsengine.assetstore.activity.UserLoginActivity;
 import com.celticsengine.assetstore.dynamodb.CelticAssetsDao;
 import com.celticsengine.assetstore.dynamodb.CelticUsersDao;
@@ -33,6 +34,10 @@ public class App {
 
 	public UpdatePasswordActivity provideUpdatePasswordActivityProvider() {
 		return new UpdatePasswordActivity(provideCelticUsersDao());
+	}
+    
+	public DeleteUserActivity provideDeleteUserActivity() {
+		return new DeleteUserActivity(provideCelticUsersDao());
 	}
 
 

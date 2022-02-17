@@ -1,8 +1,6 @@
 package com.celticsengine.assetstore.dynamodb;
 
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
@@ -84,6 +82,10 @@ public class CelticUsersDao {
 
 	public void saveCelticUsers(CelticUser celticUser) {
 		this.dynamoDbMapper.save(celticUser);
+	}
+
+	public void deleteCelticUser(CelticUser celticUser) {
+		this.dynamoDbMapper.delete(celticUser);
 	}
 
 }

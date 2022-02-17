@@ -19,16 +19,16 @@ public class UserLoginResult {
 		this.jwt = jwt;
 	}
 
-	public static UserLoginResult.Builder builder() {
-		return new Builder();
-	}
-
 	public String getJwt() {
 		return jwt;
 	}
 
 	public void setJwt(String jwt) {
 		this.jwt = jwt;
+	}
+
+	public static UserLoginResult.Builder builder() {
+		return new Builder();
 	}
 
 	public static final class Builder {
@@ -70,3 +70,4 @@ public class UserLoginResult {
 		}
 	}
 }
+
