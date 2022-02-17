@@ -1,10 +1,6 @@
 package com.celticsengine.assetstore.models.results;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
 import java.util.Date;
 import java.util.Set;
 

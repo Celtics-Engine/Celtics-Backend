@@ -1,7 +1,5 @@
 package com.celticsengine.assetstore.models.requests;
 
-import org.checkerframework.checker.units.qual.C;
-
 import java.util.Objects;
 import java.util.Set;
 
