@@ -2,6 +2,7 @@ package com.celticsengine.assetstore;
 
 import com.celticsengine.assetstore.dependency.App;
 import com.celticsengine.assetstore.models.requests.CreateAssetRequest;
+import com.celticsengine.assetstore.models.requests.GetAssetRequest;
 import com.celticsengine.assetstore.models.results.CreateAssetResult;
 
 import java.util.HashSet;
@@ -13,12 +14,13 @@ public class Main {
 
 
 	public static void main(String[] args) {
-		CreateAssetRequest request = new CreateAssetRequest("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI1ZWUwZTI2OC1hMzQxLTQwZTktYmFlNC0yYWM4NTU2ZjU2NTUiLCJ1c2VybmFtZSI6InRlc3RAZXhhbXBsZS5jb20iLCJkYXRlX2NyZWF0ZWQiOiIyMDIyLTAyLTExIiwiZXhwIjoxNjQ0NzA3MDQyfQ.GuVIt0fR_tjVXRxJQgKtcf2dwB-KO0MH-iwoZ8USiJRJRR9EljNyvUkaQjbA56jJY2Xjed54KLQ13dKd-3UQzA"
-	,"Will", "Test", new HashSet<>(List.of("")), "0.0.1");
+		GetAssetRequest request = new GetAssetRequest();
+		request.setUserId("IDHBG39788");
+		request.setAssetId("B019HKJTCI");
 
 //		CreateUserResult result = getApp().get.handleRequest(request,
 //				null);
-		CreateAssetResult result = getApp().provideCreateAssetActivity().handleRequest(request, null);
+		CreateAssetResult result = getApp().providerGetAssetActivity().handleRequest(request, null);
 
 
 		System.out.println(result.toString());
