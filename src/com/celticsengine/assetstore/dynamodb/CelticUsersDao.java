@@ -2,7 +2,6 @@ package com.celticsengine.assetstore.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
@@ -53,23 +52,22 @@ public class CelticUsersDao {
 	}
 
 	// probably doesn't work
-//	public CelticUser getCelticUserScan(String id) {
-//		ScanRequest scanRequest = new ScanRequest()
-//				.withTableName("CelticUsers")
-//				.withFilterExpression("id = :id")
-//				.withExpressionAttributeValues(new HashMap<String, AttributeValue>() {{
-//					put(":id", new AttributeValue().withS(id));
-//				}});
-//
-//		ScanResult scanResult = client.scan(scanRequest);
-//
-//		if (scanResult.getCount() == 0) {
-//			throw new CelticUsersNotFoundException(id);
-//		}
-//
-//		return dynamoDbMapper.marshallIntoObject(CelticUser.class, scanResult.getItems().get(0));
-//	}
+	public CelticUser getCelticUserScan(String id) {
+		ScanRequest scanRequest = new ScanRequest()
+				.withTableName("CelticUsers")
+				.withFilterExpression("id = :id")
+				.withExpressionAttributeValues(new HashMap<String, AttributeValue>() {{
+					put(":id", new AttributeValue().withS(id));
+				}});
 
+		ScanResult scanResult = client.scan(scanRequest);
+
+		if (scanResult.getCount() == 0) {
+			throw new CelticUsersNotFoundException(id);
+		}
+
+		return dynamoDbMapper.marshallIntoObject(CelticUser.class, scanResult.getItems().get(0));
+	}
 
 	public CelticUser getCelticUsers(String asin) {
 		CelticUser celticUser = this.dynamoDbMapper.load(CelticUser.class, asin);
@@ -80,27 +78,23 @@ public class CelticUsersDao {
 	}
 
 	public List<String> getAllCelticUserIdsScan() {
-		Map<String, AttributeValue> tableAttributeMap = new HashMap<String, AttributeValue>();
-		tableAttributeMap.put(":id", new AttributeValue());
+		List<String> ids = new ArrayList<>();
 
 		ScanRequest scanRequest = new ScanRequest()
 				.withTableName("celtic_users")
-				.withProjectionExpression("user_id")
-				.withExpressionAttributeValues(tableAttributeMap);
+				.withAttributesToGet("user_id");
 
+		ScanResult result = client.scan(scanRequest); // ResourceNotFoundException
 
-		ScanResult result = client.scan(scanRequest);
-		List<String> listOfIds = new ArrayList<>();
-
-		for (Map<String, AttributeValue> item : result.getItems()) {
-			listOfIds.add(item.get("id").toString());
+		for (Map<String, AttributeValue> id : result.getItems()) {
+			ids.add(id.get("user_id").toString());
 		}
 
-		return listOfIds;
+		return ids;
 	}
+
 
 	public void saveCelticUsers(CelticUser celticUser) {
 		this.dynamoDbMapper.save(celticUser);
 	}
-
 }
