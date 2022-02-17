@@ -51,9 +51,7 @@ public class CreateUserActivity implements RequestHandler<CreateUserRequest, Use
 
 
 		return UserLoginResult.builder()
-				.withUserId(celticUser.getUserId())
-				.withUsername(celticUser.getUsername())
-				.withDateCreated(celticUser.getDateCreated())
+				.withCelticUser(celticUser)
 				.build(celticUser.getPassword());
 	}
 }

@@ -10,17 +10,31 @@ import java.util.Date;
 
 
 public class UserLoginResult {
+	private boolean loginSuccessful;
 	private String jwt;
 
 	public UserLoginResult() {
 	}
 
-	public UserLoginResult(String jwt) {
+	private UserLoginResult(boolean loginSuccessful) {
+		this.loginSuccessful = loginSuccessful;
+	}
+
+	private UserLoginResult(boolean loginSuccessful, String jwt) {
+		this.loginSuccessful = loginSuccessful;
 		this.jwt = jwt;
+	}
+
+	public boolean getLoginSuccessful() {
+		return loginSuccessful;
 	}
 
 	public String getJwt() {
 		return jwt;
+	}
+
+	public void setLoginSuccessful(boolean loginSuccessful) {
+		this.loginSuccessful = loginSuccessful;
 	}
 
 	public void setJwt(String jwt) {
@@ -32,38 +46,29 @@ public class UserLoginResult {
 	}
 
 	public static final class Builder {
-		private String user_id;
-		private String username;
-		private String dateCreated;
+		private boolean loginSuccessful;
+		private CelticUser celticUser;
 
-		public Builder withUserId(String user_id) {
-			this.user_id = user_id;
+		public Builder withLoginSuccessful(boolean flag) {
+			this.loginSuccessful = flag;
 			return this;
 		}
 
-		public Builder withUsername(String username) {
-			this.username = username;
+		public Builder withCelticUser(CelticUser celticUser) {
+			this.celticUser = celticUser;
 			return this;
 		}
 
-		public Builder withDateCreated(String dateCreated) {
-			this.dateCreated = dateCreated;
-			return this;
-		}
-
-		public Builder createFromCelticUser(CelticUser celticUser) {
-			this.user_id = celticUser.getUserId();
-			this.username = celticUser.getUsername();
-			this.dateCreated = celticUser.getDateCreated();
-			return this;
+		public UserLoginResult build() {
+			return new UserLoginResult(loginSuccessful);
 		}
 
 		public UserLoginResult build(String passwordKey) {
 			Key key = Keys.hmacShaKeyFor(passwordKey.getBytes(StandardCharsets.UTF_8));
-			return new UserLoginResult(Jwts.builder()
-					.setSubject(user_id)
-					.claim("username", username)
-					.claim("date_created", dateCreated)
+			return new UserLoginResult(loginSuccessful, Jwts.builder()
+					.setSubject(celticUser.getUserId())
+					.claim("username", celticUser.getUsername())
+					.claim("date_created", celticUser.getDateCreated())
 					.setExpiration(new Date(System.currentTimeMillis() + 86400000))
 					.signWith(key)
 					.compact());
