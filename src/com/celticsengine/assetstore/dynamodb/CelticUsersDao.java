@@ -1,6 +1,5 @@
 package com.celticsengine.assetstore.dynamodb;
 
-
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
@@ -9,7 +8,9 @@ import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.celticsengine.assetstore.dynamodb.models.CelticUser;
 import com.celticsengine.assetstore.exception.CelticUsersNotFoundException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -79,6 +80,23 @@ public class CelticUsersDao {
 		}
 		return celticUser;
 	}
+
+	public List<String> getAllCelticUserIdsScan() {
+		List<String> ids = new ArrayList<>();
+
+		ScanRequest scanRequest = new ScanRequest()
+				.withTableName("celtic_users")
+				.withAttributesToGet("user_id");
+
+		ScanResult result = client.scan(scanRequest); // ResourceNotFoundException
+
+		for (Map<String, AttributeValue> id : result.getItems()) {
+			ids.add(id.get("user_id").toString());
+		}
+
+		return ids;
+	}
+
 
 	public void saveCelticUsers(CelticUser celticUser) {
 		this.dynamoDbMapper.save(celticUser);
