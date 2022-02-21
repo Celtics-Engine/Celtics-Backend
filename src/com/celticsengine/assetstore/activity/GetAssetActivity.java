@@ -37,13 +37,13 @@ public class GetAssetActivity implements RequestHandler<GetAssetRequest, CreateA
             return CreateAssetResult.builder()
                     .withUserId(celticAsset.getUserId())
                     .withAssetId(celticAsset.getAssetId())
-                    .withName(celticAsset.getName())
+                    .withName(celticAsset.getAssetName())
                     .withAssetLocation(celticAsset.getAssetLocation())
-                    .withDiscription(celticAsset.getDescription())
+                    .withDescription(celticAsset.getDescription())
                     .withImages(celticAsset.getImages())
                     .withFileSize(celticAsset.getFileSize())
                     .withBucketId(celticAsset.getBucketId())
-                    .withCompatableEngineVer(celticAsset.getCompatibleEngineVer())
+                    .withCompatibleEngineVer(celticAsset.getCompatibleEngineVer())
                     .withDatePosted(celticAsset.getDatePosted())
                     .build();
         }

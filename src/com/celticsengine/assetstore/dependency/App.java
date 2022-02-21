@@ -24,10 +24,6 @@ public class App {
         return new CreateUserActivity(provideCelticUsersDao());
     }
 
-    public CreateAssetActivity provideCreateAssetActivity() {
-        return new CreateAssetActivity(provideCelticAssetsDao(), provideCelticUsersDao());
-    }
-
 	public UserLoginActivity provideUserLoginActivityProvider() {
 		return new UserLoginActivity(provideCelticUsersDao());
 	}
