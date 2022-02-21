@@ -72,10 +72,10 @@ public class CelticUsersDao {
 	}
 
 
-	public CelticUser getCelticUsers(String asin) {
-		CelticUser celticUser = this.dynamoDbMapper.load(CelticUser.class, asin);
+	public CelticUser getCelticUsers(String userId) {
+		CelticUser celticUser = this.dynamoDbMapper.load(CelticUser.class, userId);
 		if (celticUser == null) {
-			throw new CelticUsersNotFoundException("Could not find playlist with id " + asin);
+			throw new CelticUsersNotFoundException("Could not find playlist with id " + userId);
 		}
 		return celticUser;
 	}

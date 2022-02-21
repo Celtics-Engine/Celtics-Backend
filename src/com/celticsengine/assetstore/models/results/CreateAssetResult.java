@@ -1,7 +1,6 @@
 package com.celticsengine.assetstore.models.results;
 
 import io.jsonwebtoken.Jwts;
-
 import java.util.Date;
 import java.util.Set;
 

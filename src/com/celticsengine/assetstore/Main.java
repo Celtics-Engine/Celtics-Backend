@@ -8,7 +8,7 @@ import com.celticsengine.assetstore.dynamodb.CelticAssetsDao;
 import com.celticsengine.assetstore.dynamodb.models.CelticAsset;
 import com.celticsengine.assetstore.models.requests.AssetSearchRequest;
 import com.celticsengine.assetstore.models.requests.CreateAssetRequest;
-import com.celticsengine.assetstore.models.results.AssetSearchResult;
+import com.celticsengine.assetstore.models.requests.GetAssetRequest;
 import com.celticsengine.assetstore.models.results.CreateAssetResult;
 
 import java.util.HashSet;
@@ -19,8 +19,14 @@ public class Main {
     public static App app;
 
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
+		GetAssetRequest request = new GetAssetRequest();
+		request.setUserId("IDHBG39788");
+		request.setAssetId("B019HKJTCI");
 
+//		CreateUserResult result = getApp().get.handleRequest(request,
+//				null);
+		CreateAssetResult result = getApp().providerGetAssetActivity().handleRequest(request, null);
 
 //        CreateAssetRequest request = new CreateAssetRequest("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNzE3NjNlNy05NTBkLTQyODQtYjY1Yi01MzY1OTE1ZWUxNzUiLCJ1c2VybmFtZSI6InRlc3RAZXhhbXBsZS5jb20iLCJkYXRlX2NyZWF0ZWQiOiIyMDIyLTAyLTE2IiwiZXhwIjoxNjQ1MTUyNjczfQ.5BWRc5500okYTtkFknb4rL79jJ-hYzYEdvpwfDCDBzeytggBRUtuZn1Ii5CK7CozIrqNwQC1rHehmvdWogIOQQ"
 //                , "Will Cool Asset", "Test", new HashSet<>(List.of("")), "0.0.1");

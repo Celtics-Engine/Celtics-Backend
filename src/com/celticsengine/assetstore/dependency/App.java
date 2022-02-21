@@ -4,12 +4,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.celticsengine.assetstore.activity.AssetSearchActivity;
-import com.celticsengine.assetstore.activity.CreateAssetActivity;
-import com.celticsengine.assetstore.activity.CreateUserActivity;
-import com.celticsengine.assetstore.activity.UpdatePasswordActivity;
-import com.celticsengine.assetstore.activity.DeleteUserActivity;
-import com.celticsengine.assetstore.activity.UserLoginActivity;
+import com.celticsengine.assetstore.activity.*;
 import com.celticsengine.assetstore.dynamodb.CelticAssetsDao;
 import com.celticsengine.assetstore.dynamodb.CelticUsersDao;
 import com.celticsengine.assetstore.dynamodb.providers.DynamoDbClientProvider;
@@ -41,6 +36,8 @@ public class App {
 	public UpdatePasswordActivity provideUpdatePasswordActivityProvider() {
 		return new UpdatePasswordActivity(provideCelticUsersDao());
 	}
+
+	public GetAssetActivity providerGetAssetActivity() { return new GetAssetActivity(provideCelticAssetsDao());}
     
 	public DeleteUserActivity provideDeleteUserActivity() {
 		return new DeleteUserActivity(provideCelticUsersDao());
