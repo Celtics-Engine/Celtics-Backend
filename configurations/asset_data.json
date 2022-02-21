@@ -9,7 +9,7 @@
           "asset_id": {
             "S": "B019HKJTCI"
           },
-          "name": {
+          "asset_name": {
             "S": "Cool Asset"
           },
           "asset_location": {
@@ -24,7 +24,7 @@
           "file_size": {
             "S": "100 MB"
           },
-          "compatable_engine_ver": {
+          "compatible_engine_ver": {
             "S": "0.0.1"
           },
           "date_created": {

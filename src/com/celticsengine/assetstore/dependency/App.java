@@ -4,6 +4,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.celticsengine.assetstore.activity.AssetSearchActivity;
 import com.celticsengine.assetstore.activity.CreateAssetActivity;
 import com.celticsengine.assetstore.activity.CreateUserActivity;
 import com.celticsengine.assetstore.activity.UpdatePasswordActivity;
@@ -28,10 +29,15 @@ public class App {
         return new CreateUserActivity(provideCelticUsersDao());
     }
 
+    public CreateAssetActivity provideCreateAssetActivity() {
+        return new CreateAssetActivity(provideCelticAssetsDao(), provideCelticUsersDao());
+    }
+
 	public UserLoginActivity provideUserLoginActivityProvider() {
 		return new UserLoginActivity(provideCelticUsersDao());
 	}
 
+	public AssetSearchActivity provideAssetSearchActivity() {return new AssetSearchActivity(provideCelticAssetsDao());}
 	public UpdatePasswordActivity provideUpdatePasswordActivityProvider() {
 		return new UpdatePasswordActivity(provideCelticUsersDao());
 	}
@@ -48,6 +54,8 @@ public class App {
     private CelticAssetsDao provideCelticAssetsDao() {
         return new CelticAssetsDao(provideAmazonDynamoDB());
     }
+
+
 
 	private AmazonDynamoDB provideAmazonDynamoDB() {
 		if (amazonDynamoDB == null) {

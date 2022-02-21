@@ -9,13 +9,13 @@ public class CelticAsset {
 
    private String userId;
    private String assetId;
-   private String name ;
+   private String assetName;
    private String assetLocation;
    private String description;
    private Set<String> images;
    private String fileSize;
    private String bucketId;
-   private String compatableEngineVer;
+   private String compatibleEngineVer;
    private String datePosted;
 
     @DynamoDBHashKey(attributeName = "user_id")
@@ -36,13 +36,13 @@ public class CelticAsset {
         this.assetId = assetId;
     }
 
-    @DynamoDBAttribute(attributeName = "name")
-    public String getName() {
-        return name;
+    @DynamoDBAttribute(attributeName = "asset_name")
+    public String getAssetName() {
+        return assetName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAssetName(String assetName) {
+        this.assetName = assetName;
     }
 
     @DynamoDBAttribute(attributeName = "asset_location")
@@ -92,11 +92,11 @@ public class CelticAsset {
 
     @DynamoDBAttribute(attributeName = "compatible_engine_ver")
     public String getCompatibleEngineVer() {
-        return compatableEngineVer;
+        return compatibleEngineVer;
     }
 
     public void setCompatibleEngineVer(String compatibleEngineVer) {
-        this.compatableEngineVer = compatibleEngineVer;
+        this.compatibleEngineVer = compatibleEngineVer;
     }
 
     @DynamoDBAttribute(attributeName = "date_created")

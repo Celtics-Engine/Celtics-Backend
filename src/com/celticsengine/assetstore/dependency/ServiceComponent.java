@@ -5,8 +5,8 @@ import dagger.Component;
 import javax.inject.Singleton;
 
 @Singleton
-@Component(modules = {Mappermodule.class})
+@Component(modules = {MapperModule.class})
 public interface ServiceComponent {
-	//CreateUserAtivity provideCreateUserActivity();
+	//CreateUserActivity provideCreateUserActivity();
 
 }
